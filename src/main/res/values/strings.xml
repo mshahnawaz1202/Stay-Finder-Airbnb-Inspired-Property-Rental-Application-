@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Stay Finder</string>
+    <string name="remove_from_favorites">Remove from favorites</string>
 </resources>
