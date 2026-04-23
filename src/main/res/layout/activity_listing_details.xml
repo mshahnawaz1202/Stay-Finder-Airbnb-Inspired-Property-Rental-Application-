@@ -32,6 +32,7 @@
 
             <!-- Back Arrow -->
             <ImageView
+                android:id="@+id/imgBackBtn"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_margin="16dp"
@@ -42,6 +43,7 @@
 
             <!-- Favorite button -->
             <ImageView
+                android:id="@+id/imgFavoriteBtn"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_gravity="top|end"
