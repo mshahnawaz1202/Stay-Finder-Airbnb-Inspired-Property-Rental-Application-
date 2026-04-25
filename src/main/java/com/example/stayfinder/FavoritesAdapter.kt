@@ -9,7 +9,8 @@ import androidx.recyclerview.widget.RecyclerView
 
 class FavoritesAdapter(
     private val items: MutableList<Pair<FavoriteEntity, ListingEntity>>,
-    private val onRemove: (Long) -> Unit
+    private val onRemove: (Long) -> Unit,
+    private val onEditNote: (FavoriteEntity) -> Unit
 ) : RecyclerView.Adapter<FavoritesAdapter.FavoriteViewHolder>() {
 
     class FavoriteViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -18,6 +19,7 @@ class FavoritesAdapter(
         val tvFavAmenities: TextView  = itemView.findViewById(R.id.tvFavAmenities)
         val tvFavNote: TextView       = itemView.findViewById(R.id.tvFavNote)
         val btnRemoveFav: ImageButton = itemView.findViewById(R.id.btnRemoveFav)
+        val btnEditNote: TextView     = itemView.findViewById(R.id.btnEditNote)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavoriteViewHolder {
@@ -38,6 +40,10 @@ class FavoritesAdapter(
 
         holder.btnRemoveFav.setOnClickListener {
             onRemove(fav.id)
+        }
+
+        holder.btnEditNote.setOnClickListener {
+            onEditNote(fav)
         }
     }
 

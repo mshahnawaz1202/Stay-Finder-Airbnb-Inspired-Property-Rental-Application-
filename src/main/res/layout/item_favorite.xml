@@ -84,15 +84,34 @@
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp" />
 
-        <!-- Personal note -->
-        <TextView
-            android:id="@+id/tvFavNote"
-            android:text="📝 No personal note"
-            android:textSize="13sp"
-            android:textStyle="italic"
-            android:textColor="?android:textColorSecondary"
+        <!-- Personal note and Edit button -->
+        <LinearLayout
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content">
+            
+            <TextView
+                android:id="@+id/tvFavNote"
+                android:text="📝 No personal note"
+                android:textSize="13sp"
+                android:textStyle="italic"
+                android:textColor="?android:textColorSecondary"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content" />
+                
+            <TextView
+                android:id="@+id/btnEditNote"
+                android:text="Edit Note"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:textColor="@color/primaryRed"
+                android:padding="8dp"
+                android:background="?selectableItemBackground"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
 
     </LinearLayout>
 

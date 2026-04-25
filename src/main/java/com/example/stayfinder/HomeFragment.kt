@@ -8,9 +8,15 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+
 class HomeFragment : Fragment() {
 
     private lateinit var dbHelper: DatabaseHelper
+    private lateinit var repository: PropertyApiRepository
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -19,48 +25,51 @@ class HomeFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_home, container, false)
 
         dbHelper = DatabaseHelper(requireContext())
+        repository = PropertyApiRepository(requireContext())
 
         val rvListings: RecyclerView = view.findViewById(R.id.rvListings)
         rvListings.layoutManager = LinearLayoutManager(context)
 
-        // ── Seed the listings table only on first launch ───────────────
-        if (dbHelper.getAllListings().isEmpty()) {
-            seedListings()
+        // ── Fetch from API (sync to DB) then display ───────────────
+        lifecycleScope.launch {
+            repository.fetchListings()
+            
+            withContext(Dispatchers.Main) {
+                // ── Build Property list from DB rows ───────────────────────────
+                val properties = dbHelper.getAllListings().map { entity ->
+                    Property(
+                        id            = entity.id.toString(),
+                        title         = entity.title,
+                        location      = "See details",
+                        description   = entity.amenities,
+                        price         = entity.price,
+                        priceValue    = entity.price
+                            .replace(Regex("[^0-9.]"), "")
+                            .toDoubleOrNull() ?: 0.0,
+                        rating        = "4.8",
+                        guests        = 4,
+                        bedrooms      = 2,
+                        bathrooms     = 2,
+                        propertyType  = "House",
+                        imageUrl      = entity.imageUrl
+                    )
+                }
+
+                val adapter = HomeAdapter(properties) { selectedProperty ->
+                    val detailFragment = DetailFragment()
+                    val bundle = Bundle()
+                    bundle.putSerializable("PROPERTY_DATA", selectedProperty)
+                    detailFragment.arguments = bundle
+
+                    requireActivity().supportFragmentManager.beginTransaction()
+                        .replace(R.id.content_frame, detailFragment)
+                        .addToBackStack(null)
+                        .commit()
+                }
+
+                rvListings.adapter = adapter
+            }
         }
-
-        // ── Build Property list from DB rows ───────────────────────────
-        val properties = dbHelper.getAllListings().map { entity ->
-            Property(
-                id            = entity.id.toString(),
-                title         = entity.title,
-                location      = "See details",
-                description   = entity.amenities,
-                price         = entity.price,
-                priceValue    = entity.price
-                    .replace(Regex("[^0-9.]"), "")
-                    .toDoubleOrNull() ?: 0.0,
-                rating        = "4.8",
-                guests        = 4,
-                bedrooms      = 2,
-                bathrooms     = 2,
-                propertyType  = "House",
-                imageUrl      = entity.imageUrl
-            )
-        }
-
-        val adapter = HomeAdapter(properties) { selectedProperty ->
-            val detailFragment = DetailFragment()
-            val bundle = Bundle()
-            bundle.putSerializable("PROPERTY_DATA", selectedProperty)
-            detailFragment.arguments = bundle
-
-            requireActivity().supportFragmentManager.beginTransaction()
-                .replace(R.id.content_frame, detailFragment)
-                .addToBackStack(null)
-                .commit()
-        }
-
-        rvListings.adapter = adapter
         return view
     }
 

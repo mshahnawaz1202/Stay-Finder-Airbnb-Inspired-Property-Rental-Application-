@@ -10,6 +10,11 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+
 class DetailFragment : Fragment() {
 
     private lateinit var dbHelper: DatabaseHelper
@@ -55,21 +60,32 @@ class DetailFragment : Fragment() {
 
             if (imgFavorite != null && listingId >= 0) {
                 // Set initial icon state based on DB
-                updateFavoriteIcon(imgFavorite, dbHelper.isFavorite(listingId))
+                lifecycleScope.launch(Dispatchers.IO) {
+                    val isFav = dbHelper.isFavorite(listingId)
+                    withContext(Dispatchers.Main) {
+                        updateFavoriteIcon(imgFavorite, isFav)
+                    }
+                }
 
                 imgFavorite.setOnClickListener {
-                    if (dbHelper.isFavorite(listingId)) {
-                        // Already a favourite → remove it
-                        dbHelper.deleteFavoriteByListingId(listingId)
-                        updateFavoriteIcon(imgFavorite, false)
-                        Toast.makeText(context, "Removed from Favorites", Toast.LENGTH_SHORT).show()
-                    } else {
-                        // Not a favourite → ensure listing row exists, then add
-                        ensureListingInDb(listingId, property)
-                        val fav = FavoriteEntity(listingId = listingId, note = "")
-                        dbHelper.insertFavorite(fav)
-                        updateFavoriteIcon(imgFavorite, true)
-                        Toast.makeText(context, "Added to Favorites ❤️", Toast.LENGTH_SHORT).show()
+                    lifecycleScope.launch(Dispatchers.IO) {
+                        if (dbHelper.isFavorite(listingId)) {
+                            // Already a favourite → remove it
+                            dbHelper.deleteFavoriteByListingId(listingId)
+                            withContext(Dispatchers.Main) {
+                                updateFavoriteIcon(imgFavorite, false)
+                                Toast.makeText(context, "Removed from Favorites", Toast.LENGTH_SHORT).show()
+                            }
+                        } else {
+                            // Not a favourite → ensure listing row exists, then add
+                            ensureListingInDb(listingId, property)
+                            val fav = FavoriteEntity(listingId = listingId, note = "")
+                            dbHelper.insertFavorite(fav)
+                            withContext(Dispatchers.Main) {
+                                updateFavoriteIcon(imgFavorite, true)
+                                Toast.makeText(context, "Added to Favorites ❤️", Toast.LENGTH_SHORT).show()
+                            }
+                        }
                     }
                 }
             }
