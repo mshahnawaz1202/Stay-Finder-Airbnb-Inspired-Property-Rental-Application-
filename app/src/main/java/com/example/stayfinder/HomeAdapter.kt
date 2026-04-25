@@ -38,8 +38,12 @@ class HomeAdapter(
         holder.tvBedrooms.text = "${property.bedrooms} Beds"
         holder.tvBathrooms.text = "${property.bathrooms} Baths"
         
-        // In real app use Glide/Picasso for imgHouse. Here using placeholder:
-        holder.imgHouse.setImageResource(R.drawable.house)
+        // Use Glide for image loading
+        com.bumptech.glide.Glide.with(holder.itemView.context)
+            .load(property.imageUrl)
+            .placeholder(R.drawable.house)
+            .error(R.drawable.house)
+            .into(holder.imgHouse)
 
         holder.itemView.setOnClickListener {
             onItemClick(property)
