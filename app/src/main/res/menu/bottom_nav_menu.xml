@@ -13,9 +13,9 @@
         android:icon="@drawable/ic_map"
         android:title="Map" />
     <item
-        android:id="@+id/nav_host"
-        android:icon="@drawable/ic_add"
-        android:title="Host" />
+        android:id="@+id/nav_bookings"
+        android:icon="@drawable/ic_search"
+        android:title="Bookings" />
     <item
         android:id="@+id/nav_profile"
         android:icon="@drawable/ic_person"

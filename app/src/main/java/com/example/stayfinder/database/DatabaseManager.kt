@@ -94,6 +94,37 @@ class DatabaseManager(context: Context) {
         return bookings
     }
 
+    // FAVORITES CRUD
+    fun addFavorite(property: com.example.stayfinder.Property): Long {
+        val db = dbHelper.writableDatabase
+        val values = ContentValues().apply {
+            put(DatabaseHelper.COL_FAV_PROPERTY_ID, property.id.toIntOrNull() ?: 0)
+            put(DatabaseHelper.COL_FAV_PROPERTY_NAME, property.title)
+            put(DatabaseHelper.COL_FAV_LOCATION, property.location)
+            put(DatabaseHelper.COL_FAV_PRICE, property.price)
+            put(DatabaseHelper.COL_FAV_RATING, property.rating)
+        }
+        val id = db.insert(DatabaseHelper.TABLE_FAVORITES, null, values)
+        db.close()
+        return id
+    }
+
+    fun isFavorite(propertyId: Int): Boolean {
+        val db = dbHelper.readableDatabase
+        val cursor = db.query(DatabaseHelper.TABLE_FAVORITES, arrayOf(DatabaseHelper.COL_FAV_ID), "${DatabaseHelper.COL_FAV_PROPERTY_ID} = ?", arrayOf(propertyId.toString()), null, null, null)
+        val exists = cursor.count > 0
+        cursor.close()
+        db.close()
+        return exists
+    }
+
+    fun removeFavorite(propertyId: Int): Int {
+        val db = dbHelper.writableDatabase
+        val result = db.delete(DatabaseHelper.TABLE_FAVORITES, "${DatabaseHelper.COL_FAV_PROPERTY_ID} = ?", arrayOf(propertyId.toString()))
+        db.close()
+        return result
+    }
+
     private fun cursorToBooking(cursor: Cursor): Booking {
         return Booking(
             id = cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseHelper.COL_BOOK_ID)),

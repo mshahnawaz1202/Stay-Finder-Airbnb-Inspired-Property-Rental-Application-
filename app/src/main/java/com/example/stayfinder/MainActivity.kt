@@ -34,7 +34,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.nav_home      -> HomeFragment()
                 R.id.nav_favorites -> FavoritesFragment()
                 R.id.nav_map       -> MapFragment()
-                R.id.nav_host      -> HostFragment()
+                R.id.nav_bookings  -> com.example.stayfinder.fragments.BookingsFragment()
                 R.id.nav_profile   -> ProfileFragment()
                 else               -> HomeFragment()
             }
