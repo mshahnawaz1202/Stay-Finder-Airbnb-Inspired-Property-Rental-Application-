@@ -301,4 +301,49 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(
         }
         return result
     }
+
+    /**
+     * Requirement F5: Dynamic Search / Filter
+     * Execute LIKE query on title and sort by price.
+     */
+    fun searchFavoritesWithListings(query: String, isAscending: Boolean): List<Pair<FavoriteEntity, ListingEntity>> {
+        val sortOrder = if (isAscending) "ASC" else "DESC"
+        val sql = """
+            SELECT
+                f.$COL_FAV_ID        AS fav_id,
+                f.$COL_FAV_LISTING_ID,
+                f.$COL_FAV_NOTE,
+                l.$COL_LISTING_ID    AS listing_id,
+                l.$COL_LISTING_TITLE,
+                l.$COL_LISTING_PRICE,
+                l.$COL_LISTING_AMENITIES,
+                l.$COL_LISTING_IMAGE_URL
+            FROM $TABLE_FAVORITES f
+            INNER JOIN $TABLE_LISTINGS l
+                ON f.$COL_FAV_LISTING_ID = l.$COL_LISTING_ID
+            WHERE l.$COL_LISTING_TITLE LIKE ?
+            ORDER BY CAST(l.$COL_LISTING_PRICE AS REAL) $sortOrder
+        """.trimIndent()
+
+        val result = mutableListOf<Pair<FavoriteEntity, ListingEntity>>()
+        val cursor = readableDatabase.rawQuery(sql, arrayOf("%${query}%"))
+        cursor.use {
+            while (it.moveToNext()) {
+                val fav = FavoriteEntity(
+                    id        = it.getLong(it.getColumnIndexOrThrow("fav_id")),
+                    listingId = it.getLong(it.getColumnIndexOrThrow(COL_FAV_LISTING_ID)),
+                    note      = it.getString(it.getColumnIndexOrThrow(COL_FAV_NOTE)) ?: ""
+                )
+                val listing = ListingEntity(
+                    id        = it.getLong(it.getColumnIndexOrThrow("listing_id")),
+                    title     = it.getString(it.getColumnIndexOrThrow(COL_LISTING_TITLE)),
+                    price     = it.getString(it.getColumnIndexOrThrow(COL_LISTING_PRICE)),
+                    amenities = it.getString(it.getColumnIndexOrThrow(COL_LISTING_AMENITIES)) ?: "",
+                    imageUrl  = it.getString(it.getColumnIndexOrThrow(COL_LISTING_IMAGE_URL)) ?: ""
+                )
+                result += Pair(fav, listing)
+            }
+        }
+        return result
+    }
 }
