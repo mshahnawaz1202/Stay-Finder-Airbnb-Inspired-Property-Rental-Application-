@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Primary Brand Colors -->
+    <color name="primaryRed">#E53935</color>
+    <color name="primaryRedDark">#C62828</color>
+    <color name="primaryRedLight">#FF6F60</color>
+    <color name="darkRed">#B71C1C</color>
+
+    <!-- Accent / Secondary -->
+    <color name="accentOrange">#FF7043</color>
+    <color name="accentAmber">#FFB300</color>
+    <color name="accentTeal">#26A69A</color>
+    <color name="starYellow">#FFC107</color>
+
+    <!-- Light Theme -->
+    <color name="lightBackground">#FAFAFA</color>
+    <color name="lightSurface">#FFFFFF</color>
+    <color name="lightSurfaceVariant">#F0F0F0</color>
+    <color name="lightGray">#F5F5F5</color>
+    <color name="lightCardBg">#FFFFFF</color>
+    <color name="lightDivider">#E0E0E0</color>
+
+    <!-- Dark Theme -->
+    <color name="darkBackground">#121212</color>
+    <color name="darkSurface">#1E1E1E</color>
+    <color name="darkSurfaceVariant">#2C2C2C</color>
+    <color name="darkCardBg">#252525</color>
+    <color name="darkDivider">#3A3A3A</color>
+
+    <!-- Text Colors -->
+    <color name="textDark">#212121</color>
+    <color name="textMedium">#616161</color>
+    <color name="textLight">#9E9E9E</color>
+    <color name="textOnPrimary">#FFFFFF</color>
+    <color name="textOnDark">#F5F5F5</color>
+    <color name="textOnDarkMedium">#BDBDBD</color>
+
+    <!-- Status Colors -->
+    <color name="successGreen">#43A047</color>
+    <color name="warningAmber">#FFA000</color>
+    <color name="infoBlue">#1E88E5</color>
+
+    <!-- Gradient Overlay -->
+    <color name="gradientStart">#00000000</color>
+    <color name="gradientEnd">#CC000000</color>
+
+    <!-- Misc -->
+    <color name="white">#FFFFFF</color>
+    <color name="black">#FF000000</color>
+    <color name="shimmer">#E8E8E8</color>
+    <color name="ripple">#20E53935</color>
+
+    <!-- Chip / Tag Colors -->
+    <color name="chipBgLight">#FFEBEE</color>
+    <color name="chipBgDark">#3A2020</color>
+    <color name="chipTextLight">#C62828</color>
+    <color name="chipTextDark">#FF8A80</color>
+</resources>

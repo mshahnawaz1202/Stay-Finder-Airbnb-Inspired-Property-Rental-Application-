@@ -1,0 +1,67 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme (Light) -->
+    <style name="Base.Theme.StayFinder" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/primaryRed</item>
+        <item name="colorPrimaryDark">@color/primaryRedDark</item>
+        <item name="colorAccent">@color/accentOrange</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorSecondary">@color/accentTeal</item>
+        <item name="colorOnSecondary">@color/white</item>
+        <item name="android:colorBackground">@color/lightBackground</item>
+        <item name="colorSurface">@color/lightSurface</item>
+        <item name="colorSurfaceVariant">@color/lightSurfaceVariant</item>
+        <item name="android:textColorPrimary">@color/textDark</item>
+        <item name="android:textColorSecondary">@color/textMedium</item>
+        <item name="android:statusBarColor">@color/primaryRedDark</item>
+        <item name="android:navigationBarColor">@color/lightSurface</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="m">false</item>
+    </style>
+
+    <style name="Theme.StayFinder" parent="Base.Theme.StayFinder" />
+
+    <!-- Card Style -->
+    <style name="StayFinder.Card" parent="">
+        <item name="cardCornerRadius">16dp</item>
+        <item name="cardElevation">2dp</item>
+        <item name="cardBackgroundColor">@color/lightCardBg</item>
+    </style>
+
+    <!-- Premium Button -->
+    <style name="StayFinder.Button.Primary" parent="Widget.Material3.Button">
+        <item name="backgroundTint">@color/primaryRed</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="cornerRadius">12dp</item>
+        <item name="android:paddingTop">14dp</item>
+        <item name="android:paddingBottom">14dp</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+    </style>
+
+    <!-- Outline Button -->
+    <style name="StayFinder.Button.Outline" parent="Widget.Material3.Button.OutlinedButton">
+        <item name="strokeColor">@color/primaryRed</item>
+        <item name="android:textColor">@color/primaryRed</item>
+        <item name="cornerRadius">12dp</item>
+        <item name="android:paddingTop">14dp</item>
+        <item name="android:paddingBottom">14dp</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <!-- Chip Style -->
+    <style name="StayFinder.Chip.Amenity" parent="Widget.Material3.Chip.Assist">
+        <item name="chipBackgroundColor">@color/chipBgLight</item>
+        <item name="android:textColor">@color/chipTextLight</item>
+        <item name="chipCornerRadius">20dp</item>
+        <item name="chipMinHeight">36dp</item>
+    </style>
+
+    <!-- Bottom Navigation Style -->
+    <style name="StayFinder.BottomNav" parent="Widget.Material3.BottomNavigationView">
+        <item name="backgroundTint">@color/lightSurface</item>
+        <item name="itemIconTint">@color/primaryRed</item>
+        <item name="itemTextColor">@color/primaryRed</item>
+        <item name="elevation">8dp</item>
+    </style>
+</resources>
