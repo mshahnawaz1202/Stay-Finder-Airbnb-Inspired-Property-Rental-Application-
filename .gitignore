@@ -1,1 +1,22 @@
-/build
+# Build artifacts
+build/
+.gradle/
+app/build/
+
+# IDE files
+.idea/
+*.iml
+.idea/modules.xml
+.idea/workspace.xml
+.idea/caches/
+.idea/libraries/
+
+# Local configuration
+local.properties
+
+# Log files
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
