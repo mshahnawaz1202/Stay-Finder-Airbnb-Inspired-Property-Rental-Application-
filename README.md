@@ -2,7 +2,16 @@
 
 **Stay Finder** is a premium, Airbnb-inspired Android application built with a modern hybrid architecture. It seamlessly integrates traditional XML-based Fragments with Jetpack Compose to deliver a high-performance, visually stunning property rental experience.
 
-![Stay Finder Header](https://raw.githubusercontent.com/mshahnawaz1202/Stay-Finder-Airbnb-Inspired-Property-Rental-Application-/master/app/src/main/res/drawable/ic_home.xml) *(Note: Replace with actual screenshot link if available)*
+---
+
+## 🌟 Visual Showcase
+
+| Screen | Description | Style |
+|--------|-------------|-------|
+| **Home** | Curated listings with smart categories & search. | Glassmorphism |
+| **Favorites** | Real-time wishlist managed via Jetpack Compose. | Material 3 |
+| **Map** | Geographic exploration with interactive markers. | Hybrid |
+| **Auth** | Premium onboarding with Google & Email sync. | Elevated |
 
 ---
 
@@ -20,65 +29,62 @@
 
 ### 📡 Real-time Data & Offline Sync
 - **Firestore Integration:** Live syncing for property listings, user profiles, and favorites.
-- **Offline Bookings:** Local SQLite-backed database (Room-like logic) for managing bookings without connectivity.
+- **Offline Bookings:** Local SQLite-backed database for managing bookings without connectivity.
 - **Smart Search:** Dynamic filtering by category (Beach, Mountain, City), price ranges, and ratings.
 
 ### 📍 Interactive Exploration
 - **Integrated Maps:** Full Google Maps integration for exploring properties geographically.
-- **Dynamic Recommendations:** AI-inspired "Recommended for you" logic based on rating and popularity.
+- **Dynamic Recommendations:** Intelligent recommendation logic based on rating and popularity.
 - **Compose Surfaces:** A dedicated Favorites screen built entirely with **Jetpack Compose** and **Material 3**.
 
 ---
 
 ## 🛠️ Technology Stack
 
-| Layer | Technologies |
-|-------|--------------|
-| **Core** | Kotlin, Coroutines, Hilt/DI (Legacy Patterns) |
-| **UI** | Fragments (XML), Jetpack Compose, Material 3 |
-| **Backend** | Firebase Auth, Firestore, Cloud Messaging (FCM) |
-| **Networking** | Retrofit 2, GSON, OKHttp |
-| **Local Data** | SQLite, SharedPreferences |
-| **Media** | Coil (Compose), Glide (XML) |
+- **Language:** [Kotlin](https://kotlinlang.org/) (100%)
+- **Concurrency:** [Coroutines](https://kotlinlang.org/docs/coroutines-overview.html) & [Flow](https://kotlinlang.org/docs/flow.html)
+- **Dependency Injection:** Modular singleton patterns
+- **Backend:** [Firebase](https://firebase.google.com/) (Auth, Firestore, FCM)
+- **UI Architecture:** Hybrid (XML Fragments + Jetpack Compose)
+- **Networking:** [Retrofit 2](https://square.github.io/retrofit/) & [GSON](https://github.com/google/gson)
+- **Image Loading:** [Coil](https://coil-kt.github.io/coil/) & [Glide](https://github.com/bumptech/glide)
 
 ---
 
-## 📂 Project Structure
+## 📂 Project Architecture
+
+The project follows a modular structure for scalability and maintainability:
 
 ```text
 com.example.stayfinder
-├── auth/           # Login, Registration & Routing
-├── firebase/       # Firestore Repositories & Messaging
-├── ui/             # Core UI Fragments (Home, Map, Bookings)
-│   └── compose/    # Jetpack Compose Screens (Favorites)
-├── models/         # Data Models (Listing, Booking, Favorite)
-├── features/       # Recommendation Engine & Search
-└── database/       # Local SQLite Database Management
+├── auth/           # Login, Registration & Auth Router
+├── firebase/       # Firestore Repositories & Messaging Service
+├── ui/             # View Layer (Fragments & Custom Views)
+│   └── compose/    # Jetpack Compose Screens & Theme
+├── models/         # Domain Data Models
+├── repository/     # Data Access Layer (API & Local)
+├── features/       # Business Logic (Recommendations, Search)
+└── database/       # SQLite Storage Logic
 ```
 
 ---
 
-## ⚙️ Setup Instructions
+## ⚙️ Installation & Setup
 
-1.  **Clone the Repo:**
+1.  **Clone the Repository:**
     ```bash
     git clone https://github.com/mshahnawaz1202/Stay-Finder-Airbnb-Inspired-Property-Rental-Application-.git
     ```
-2.  **Firebase Configuration:**
-    - Place your `google-services.json` in the `app/` directory.
-    - Enable Email/Password and Google Auth in the Firebase Console.
-    - Setup Firestore with `listings`, `favorites`, and `users` collections.
-3.  **API Keys:**
-    - Add your Google Maps API key to `local.properties` or `AndroidManifest.xml`.
-4.  **Build:**
-    - Open in Android Studio (Ladybug or later recommended).
-    - Sync Gradle and Run on an Emulator/Physical Device (API 24+).
-
----
-
-## 📄 License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
+2.  **Firebase Setup:**
+    - Download `google-services.json` from your Firebase project.
+    - Place it in the `app/` directory.
+    - Enable **Email/Password** and **Google** authentication in Firebase.
+3.  **Google Maps API:**
+    - Obtain an API key from [Google Cloud Console](https://console.cloud.google.com/).
+    - Add it to your `local.properties` or directly in `AndroidManifest.xml`.
+4.  **Build & Run:**
+    - Sync the project with Gradle in Android Studio.
+    - Deploy to a device with API level 24 or higher.
 
 ---
 
