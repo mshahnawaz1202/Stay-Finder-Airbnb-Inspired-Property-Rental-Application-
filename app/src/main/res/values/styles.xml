@@ -35,4 +35,16 @@
     <dimen name="page_padding">16dp</dimen>
     <dimen name="section_spacing">24dp</dimen>
     <dimen name="item_spacing">12dp</dimen>
+
+    <!-- Bottom Nav Text Styles -->
+    <style name="BottomNavTextActive" parent="TextAppearance.MaterialComponents.Caption">
+        <item name="android:textSize">11sp</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+    </style>
+
+    <style name="BottomNavTextInactive" parent="TextAppearance.MaterialComponents.Caption">
+        <item name="android:textSize">11sp</item>
+        <item name="android:fontFamily">sans-serif</item>
+    </style>
 </resources>
+

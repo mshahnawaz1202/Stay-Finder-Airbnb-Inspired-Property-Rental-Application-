@@ -13,25 +13,50 @@
         android:gravity="center_horizontal"
         android:paddingStart="24dp"
         android:paddingEnd="24dp"
-        android:paddingTop="40dp"
+        android:paddingTop="48dp"
         android:paddingBottom="32dp">
 
-        <TextView
-            android:layout_width="wrap_content"
+        <!-- Animated Brand Logo Section -->
+        <LinearLayout
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="StayFinder"
-            android:textSize="13sp"
-            android:letterSpacing="0.2"
-            android:textAllCaps="true"
-            android:textColor="@color/premiumAccentDeep"
-            android:fontFamily="sans-serif-medium"
-            android:layout_marginBottom="8dp" />
+            android:layout_marginBottom="24dp">
 
+            <ImageView
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:src="@drawable/ic_home"
+                app:tint="@color/premiumAccentDeep"
+                android:layout_marginBottom="12dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="STAYFINDER"
+                android:textSize="14sp"
+                android:letterSpacing="0.25"
+                android:textAllCaps="true"
+                android:textColor="@color/premiumAccentDeep"
+                android:fontFamily="sans-serif-medium" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Find your perfect stay"
+                android:textSize="13sp"
+                android:textColor="@color/textMedium"
+                android:layout_marginTop="4dp" />
+
+        </LinearLayout>
+
+        <!-- Glass Card for Login Form -->
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:cardCornerRadius="28dp"
-            app:cardElevation="14dp"
+            app:cardElevation="16dp"
             app:strokeWidth="1dp"
             app:strokeColor="@color/premiumOutline"
             app:cardBackgroundColor="?colorSurface">
@@ -43,32 +68,26 @@
                 android:padding="28dp"
                 android:gravity="center_horizontal">
 
-                <ImageView
-                    android:layout_width="72dp"
-                    android:layout_height="72dp"
-                    android:src="@drawable/ic_home"
-                    android:tint="@color/premiumAccentDeep"
-                    android:layout_marginBottom="20dp" />
-
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/welcome_stayfinder"
-                    android:textSize="26sp"
+                    android:textSize="24sp"
                     android:letterSpacing="0.01"
                     android:textStyle="bold"
                     android:textColor="?android:textColorPrimary"
                     android:fontFamily="sans-serif-medium"
-                    android:layout_marginBottom="8dp" />
+                    android:layout_marginBottom="6dp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/sign_in_to_continue"
-                    android:textSize="15sp"
+                    android:textSize="14sp"
                     android:textColor="?android:textColorSecondary"
                     android:layout_marginBottom="28dp" />
 
+                <!-- Email Field -->
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -77,7 +96,9 @@
                     app:boxCornerRadiusTopStart="16dp"
                     app:boxCornerRadiusTopEnd="16dp"
                     app:boxCornerRadiusBottomStart="16dp"
-                    app:boxCornerRadiusBottomEnd="16dp">
+                    app:boxCornerRadiusBottomEnd="16dp"
+                    app:startIconDrawable="@drawable/ic_person"
+                    app:startIconTint="@color/premiumAccentDeep">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/etEmail"
@@ -87,6 +108,7 @@
                         android:inputType="textEmailAddress" />
                 </com.google.android.material.textfield.TextInputLayout>
 
+                <!-- Password Field -->
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -96,7 +118,9 @@
                     app:boxCornerRadiusTopEnd="16dp"
                     app:boxCornerRadiusBottomStart="16dp"
                     app:boxCornerRadiusBottomEnd="16dp"
-                    app:endIconMode="password_toggle">
+                    app:endIconMode="password_toggle"
+                    app:startIconDrawable="@drawable/ic_search"
+                    app:startIconTint="@color/premiumAccentDeep">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/etPassword"
@@ -106,6 +130,7 @@
                         android:inputType="textPassword" />
                 </com.google.android.material.textfield.TextInputLayout>
 
+                <!-- Login Button -->
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnEmailLogin"
                     android:layout_width="match_parent"
@@ -113,21 +138,59 @@
                     android:text="@string/login"
                     android:textAllCaps="false"
                     android:textSize="16sp"
+                    android:fontFamily="sans-serif-medium"
                     app:backgroundTint="@color/premiumAccentDeep"
-                    app:cornerRadius="16dp" />
+                    app:cornerRadius="16dp"
+                    app:icon="@drawable/ic_home"
+                    app:iconGravity="textStart"
+                    app:iconPadding="8dp"
+                    app:iconTint="@color/white" />
 
+                <!-- Divider -->
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="20dp">
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="1dp"
+                        android:background="@color/premiumOutline" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="  or  "
+                        android:textSize="13sp"
+                        android:textColor="@color/textMedium" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="1dp"
+                        android:background="@color/premiumOutline" />
+
+                </LinearLayout>
+
+                <!-- Google Sign-In Button -->
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnGoogleLogin"
                     style="@style/Widget.Material3.Button.OutlinedButton"
                     android:layout_width="match_parent"
                     android:layout_height="56dp"
-                    android:layout_marginTop="14dp"
                     android:text="@string/sign_in_with_google"
                     android:textAllCaps="false"
+                    android:textSize="15sp"
                     app:cornerRadius="16dp"
-                    app:strokeColor="@color/premiumAccentDeep"
-                    android:textColor="@color/premiumAccentDeep" />
+                    app:strokeColor="@color/premiumOutlineMuted"
+                    app:strokeWidth="1.5dp"
+                    android:textColor="?android:textColorPrimary" />
 
+                <!-- Register Link -->
                 <TextView
                     android:id="@+id/tvGoRegister"
                     android:layout_width="wrap_content"
@@ -143,7 +206,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    android:visibility="gone" />
+                    android:visibility="gone"
+                    android:indeterminateTint="@color/premiumAccentDeep" />
 
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>

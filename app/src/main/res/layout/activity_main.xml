@@ -18,14 +18,15 @@
 
     </FrameLayout>
 
+    <!-- Premium Floating Bottom Navigation -->
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="16dp"
-        app:cardCornerRadius="28dp"
-        app:cardElevation="10dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="12dp"
+        app:cardCornerRadius="32dp"
+        app:cardElevation="12dp"
         app:strokeWidth="0dp"
         app:cardBackgroundColor="?colorSurface"
         app:cardUseCompatPadding="false">
@@ -35,14 +36,17 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
-            android:paddingTop="6dp"
-            android:paddingBottom="6dp"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
             android:elevation="0dp"
             app:itemIconTint="@color/bottom_nav_color"
             app:itemTextColor="@color/bottom_nav_color"
             app:itemRippleColor="@color/ripple"
             app:menu="@menu/bottom_nav_menu"
-            app:labelVisibilityMode="labeled" />
+            app:labelVisibilityMode="labeled"
+            app:itemIconSize="24dp"
+            app:itemTextAppearanceActive="@style/BottomNavTextActive"
+            app:itemTextAppearanceInactive="@style/BottomNavTextInactive" />
     </com.google.android.material.card.MaterialCardView>
 
 </LinearLayout>
