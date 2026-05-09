@@ -5,9 +5,10 @@
     android:layout_height="wrap_content"
     android:layout_marginStart="16dp"
     android:layout_marginEnd="16dp"
-    android:layout_marginBottom="14dp"
-    card:cardCornerRadius="18dp"
-    card:cardElevation="3dp"
+    android:layout_marginBottom="18dp"
+    card:cardCornerRadius="24dp"
+    card:cardElevation="8dp"
+    card:cardMaxElevation="12dp"
     card:cardBackgroundColor="?colorSurface"
     android:foreground="?selectableItemBackground"
     android:clickable="true"
@@ -21,7 +22,7 @@
         <!-- Image Container with Overlay -->
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="200dp">
+            android:layout_height="220dp">
 
             <ImageView
                 android:id="@+id/imgHouse"
@@ -46,7 +47,7 @@
                 android:layout_margin="12dp"
                 android:padding="8dp"
                 android:src="@drawable/ic_favorite_border"
-                android:background="@drawable/rounded_chip_bg"
+                android:background="@drawable/rounded_chip_glass"
                 android:contentDescription="Favorite" />
 
             <!-- Rating Badge -->
@@ -56,8 +57,11 @@
                 android:layout_gravity="bottom|start"
                 android:layout_marginStart="14dp"
                 android:layout_marginBottom="12dp"
-                android:background="@drawable/rounded_chip_bg"
-                android:padding="6dp"
+                android:background="@drawable/rounded_chip_glass"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:paddingTop="6dp"
+                android:paddingBottom="6dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
 
@@ -74,7 +78,7 @@
                     android:text="4.8"
                     android:textSize="13sp"
                     android:textStyle="bold"
-                    android:textColor="@color/textDark" />
+                    android:textColor="@color/premiumAccentDeep" />
 
             </LinearLayout>
 
@@ -86,19 +90,25 @@
                 android:layout_gravity="bottom|end"
                 android:layout_marginEnd="14dp"
                 android:layout_marginBottom="12dp"
-                android:background="@drawable/rounded_chip_bg"
-                android:padding="6dp"
+                android:background="@drawable/rounded_chip_glass"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
+                android:paddingTop="6dp"
+                android:paddingBottom="6dp"
                 android:text="$120/night"
                 android:textSize="13sp"
                 android:textStyle="bold"
-                android:textColor="@color/primaryRed" />
+                android:textColor="@color/premiumAccentDeep" />
 
         </FrameLayout>
 
         <!-- Card Content -->
         <LinearLayout
             android:orientation="vertical"
-            android:padding="16dp"
+            android:paddingStart="18dp"
+            android:paddingEnd="18dp"
+            android:paddingTop="18dp"
+            android:paddingBottom="20dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -107,7 +117,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Luxury Beach House"
-                android:textSize="18sp"
+                android:textSize="19sp"
+                android:letterSpacing="0.01"
                 android:textStyle="bold"
                 android:textColor="?android:textColorPrimary"
                 android:fontFamily="sans-serif-medium" />

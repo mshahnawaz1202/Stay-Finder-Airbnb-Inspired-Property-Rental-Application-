@@ -33,11 +33,13 @@ class MapFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
-        mapFragment.getMapAsync { googleMap ->
+        val mapFragment = childFragmentManager.findFragmentById(R.id.map) as? SupportMapFragment
+        mapFragment?.getMapAsync { googleMap ->
             map = googleMap
             googleMap.uiSettings.isZoomControlsEnabled = true
             attachListingsListener()
+        } ?: run {
+            Toast.makeText(context, "Map is loading…", Toast.LENGTH_SHORT).show()
         }
 
         val btnShowNearby = view.findViewById<Button>(R.id.btnShowNearby)

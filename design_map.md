@@ -2,6 +2,8 @@
 
 This document maps **visual design**, **UI surfaces**, and **navigation** for the hybrid Fragment + Jetpack Compose app.
 
+**Premium refresh:** warm canvas (`premiumCanvas`), burgundy-wine accent (`premiumAccentDeep`), outlined search + filter surfaces, floating pill bottom nav, elevated listing cards with glass badges, gradient auth + elevated form cards, and expanded Material 3 **Compose** color roles for Favorites.
+
 ---
 
 ## 1. Design system

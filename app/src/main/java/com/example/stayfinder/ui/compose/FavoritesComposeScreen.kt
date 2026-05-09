@@ -9,14 +9,17 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
@@ -28,6 +31,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.example.stayfinder.R
@@ -46,6 +50,7 @@ fun FavoritesComposeRoute() {
     var items by remember { mutableStateOf<List<FavoriteFirestoreItem>>(emptyList()) }
     var query by remember { mutableStateOf("") }
     val scope = rememberCoroutineScope()
+    val cardShape = RoundedCornerShape(20.dp)
 
     DisposableEffect(uid) {
         if (uid == null) {
@@ -67,64 +72,106 @@ fun FavoritesComposeRoute() {
         }
     }
 
-    Column(Modifier.fillMaxSize()) {
-        TopAppBar(title = { Text("Favorites") })
-        OutlinedTextField(
-            value = query,
-            onValueChange = { query = it },
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 16.dp, vertical = 8.dp),
-            placeholder = { Text("Search saved stays") },
-            singleLine = true
-        )
-        if (uid == null) {
-            Text(
-                "Sign in to sync favorites from Firestore.",
-                modifier = Modifier.padding(24.dp),
-                style = MaterialTheme.typography.bodyLarge
+    Scaffold(
+        modifier = Modifier.fillMaxSize(),
+        containerColor = MaterialTheme.colorScheme.background,
+        topBar = {
+            TopAppBar(
+                title = {
+                    Text(
+                        "Saved stays",
+                        style = MaterialTheme.typography.titleLarge,
+                        fontWeight = FontWeight.SemiBold
+                    )
+                },
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = MaterialTheme.colorScheme.surface,
+                    titleContentColor = MaterialTheme.colorScheme.onSurface
+                )
             )
-        } else if (filtered.isEmpty()) {
-            Text(
-                "No favorites yet. Heart a listing to see it here.",
-                modifier = Modifier.padding(24.dp),
-                style = MaterialTheme.typography.bodyLarge
+        }
+    ) { innerPadding ->
+        Column(
+            Modifier
+                .fillMaxSize()
+                .padding(innerPadding)
+        ) {
+            OutlinedTextField(
+                value = query,
+                onValueChange = { query = it },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 20.dp, vertical = 12.dp),
+                placeholder = { Text("Search saved stays") },
+                singleLine = true,
+                shape = RoundedCornerShape(16.dp)
             )
-        } else {
-            LazyColumn(
-                contentPadding = PaddingValues(16.dp),
-                verticalArrangement = Arrangement.spacedBy(12.dp)
-            ) {
-                items(filtered, key = { it.listingId }) { item ->
-                    Card(
-                        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
-                        modifier = Modifier.fillMaxWidth()
-                    ) {
-                        Column(Modifier.padding(12.dp)) {
-                            AsyncImage(
-                                model = item.imageUrl.takeIf { it.isNotBlank() },
-                                contentDescription = null,
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .height(180.dp)
-                                    .padding(bottom = 8.dp),
-                                contentScale = ContentScale.Crop,
-                                placeholder = painterResource(R.drawable.ic_home),
-                                error = painterResource(R.drawable.ic_home)
-                            )
-                            Text(item.title, style = MaterialTheme.typography.titleMedium)
-                            Text(
-                                "${item.location} • ${item.price} • ★ ${item.rating}",
-                                style = MaterialTheme.typography.bodySmall
-                            )
-                            TextButton(
-                                onClick = {
-                                    scope.launch {
-                                        repo.removeFavorite(uid!!, item.listingId)
-                                    }
+            if (uid == null) {
+                Text(
+                    "Sign in to sync favorites from Firestore.",
+                    modifier = Modifier.padding(28.dp),
+                    style = MaterialTheme.typography.bodyLarge,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+            } else if (filtered.isEmpty()) {
+                Text(
+                    "No favorites yet. Heart a listing to see it here.",
+                    modifier = Modifier.padding(28.dp),
+                    style = MaterialTheme.typography.bodyLarge,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+            } else {
+                LazyColumn(
+                    contentPadding = PaddingValues(start = 20.dp, end = 20.dp, bottom = 24.dp),
+                    verticalArrangement = Arrangement.spacedBy(16.dp)
+                ) {
+                    items(filtered, key = { it.listingId }) { item ->
+                        Card(
+                            shape = cardShape,
+                            elevation = CardDefaults.cardElevation(
+                                defaultElevation = 6.dp,
+                                pressedElevation = 8.dp
+                            ),
+                            colors = CardDefaults.cardColors(
+                                containerColor = MaterialTheme.colorScheme.surface
+                            ),
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
+                            Column(Modifier.padding(16.dp)) {
+                                AsyncImage(
+                                    model = item.imageUrl.takeIf { it.isNotBlank() },
+                                    contentDescription = null,
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .height(188.dp)
+                                        .padding(bottom = 12.dp),
+                                    contentScale = ContentScale.Crop,
+                                    placeholder = painterResource(R.drawable.ic_home),
+                                    error = painterResource(R.drawable.ic_home)
+                                )
+                                Text(
+                                    item.title,
+                                    style = MaterialTheme.typography.titleMedium,
+                                    fontWeight = FontWeight.SemiBold
+                                )
+                                Text(
+                                    "${item.location} · ${item.price} · ★ ${item.rating}",
+                                    style = MaterialTheme.typography.bodySmall,
+                                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                                )
+                                TextButton(
+                                    onClick = {
+                                        scope.launch {
+                                            repo.removeFavorite(uid!!, item.listingId)
+                                        }
+                                    },
+                                    modifier = Modifier.padding(top = 4.dp)
+                                ) {
+                                    Text(
+                                        "Remove",
+                                        color = MaterialTheme.colorScheme.primary
+                                    )
                                 }
-                            ) {
-                                Text("Remove")
                             }
                         }
                     }

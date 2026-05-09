@@ -6,6 +6,17 @@
     <color name="primaryRedLight">#FF6F60</color>
     <color name="darkRed">#B71C1C</color>
 
+    <!-- Premium canvas & accents -->
+    <color name="premiumCanvas">#FAF8F5</color>
+    <color name="premiumCanvasDeep">#F3EFE8</color>
+    <color name="premiumOutline">#E6E1DB</color>
+    <color name="premiumOutlineMuted">#D4CFC7</color>
+    <color name="premiumGlassLight">#F2FFFFFF</color>
+    <color name="premiumGlassOnImage">#E8FFFFFF</color>
+    <color name="premiumAccentDeep">#8B2332</color>
+    <color name="authGradientStart">#FFF5F3</color>
+    <color name="authGradientEnd">#FFE8E4</color>
+
     <!-- Accent / Secondary -->
     <color name="accentOrange">#FF7043</color>
     <color name="accentAmber">#FFB300</color>
@@ -13,7 +24,7 @@
     <color name="starYellow">#FFC107</color>
 
     <!-- Light Theme -->
-    <color name="lightBackground">#FAFAFA</color>
+    <color name="lightBackground">@color/premiumCanvas</color>
     <color name="lightSurface">#FFFFFF</color>
     <color name="lightSurfaceVariant">#F0F0F0</color>
     <color name="lightGray">#F5F5F5</color>

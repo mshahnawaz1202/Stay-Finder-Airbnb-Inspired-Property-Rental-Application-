@@ -36,11 +36,15 @@ class EditFavoriteDialog(
 
     private fun updateNote(note: String) {
         lifecycleScope.launch(Dispatchers.IO) {
-            val dbHelper = DatabaseHelper(requireContext())
-            dbHelper.updateFavoriteNote(favoriteId, note)
-            dbHelper.close()
-            withContext(Dispatchers.Main) {
-                onNoteUpdated()
+            try {
+                val dbHelper = DatabaseHelper(requireContext())
+                dbHelper.updateFavoriteNote(favoriteId, note)
+                dbHelper.close()
+                withContext(Dispatchers.Main) {
+                    onNoteUpdated()
+                }
+            } catch (e: Exception) {
+                // Silently handle if DB operation fails
             }
         }
     }

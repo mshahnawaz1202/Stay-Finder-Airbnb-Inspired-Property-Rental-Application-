@@ -12,8 +12,8 @@
         android:gravity="center_vertical"
         android:paddingStart="20dp"
         android:paddingEnd="20dp"
-        android:paddingTop="16dp"
-        android:paddingBottom="8dp"
+        android:paddingTop="20dp"
+        android:paddingBottom="12dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -27,7 +27,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Explore"
-                android:textSize="28sp"
+                android:textSize="32sp"
+                android:letterSpacing="0.02"
                 android:textStyle="bold"
                 android:textColor="?android:textColorPrimary"
                 android:fontFamily="sans-serif-medium" />
@@ -35,10 +36,10 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Find your perfect stay"
-                android:textSize="14sp"
+                android:text="Curated stays, refined search"
+                android:textSize="15sp"
                 android:textColor="?android:textColorSecondary"
-                android:layout_marginTop="2dp" />
+                android:layout_marginTop="4dp" />
 
         </LinearLayout>
 
@@ -47,7 +48,8 @@
             android:id="@+id/switchDarkMode"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:thumbTint="@color/primaryRed"
+            android:thumbTint="@color/premiumAccentDeep"
+            app:trackTint="@color/premiumOutlineMuted"
             app:trackTintMode="src_in" />
 
     </LinearLayout>
@@ -58,18 +60,20 @@
         android:gravity="center_vertical"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="6dp"
-        android:background="@drawable/rounded_search_bg"
-        android:elevation="2dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/bg_search_premium"
+        android:elevation="4dp"
+        android:paddingStart="18dp"
+        android:paddingEnd="18dp"
         android:layout_width="match_parent"
-        android:layout_height="52dp">
+        android:layout_height="56dp">
 
         <ImageView
             android:layout_width="22dp"
             android:layout_height="22dp"
             android:src="@drawable/ic_search"
-            android:layout_marginEnd="10dp"
+            android:layout_marginEnd="12dp"
             android:tint="?android:textColorSecondary" />
 
         <EditText
@@ -77,9 +81,9 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:hint="Search by city, name..."
+            android:hint="Where to?"
             android:background="@null"
-            android:textSize="15sp"
+            android:textSize="16sp"
             android:textColorHint="@color/textLight"
             android:textColor="?android:textColorPrimary"
             android:singleLine="true"
@@ -93,8 +97,13 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
-        android:layout_marginBottom="8dp"
-        android:gravity="center_vertical">
+        android:layout_marginBottom="10dp"
+        android:gravity="center_vertical"
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:background="@drawable/bg_filter_bar">
 
         <EditText
             android:id="@+id/etMaxPrice"
@@ -103,7 +112,8 @@
             android:layout_height="wrap_content"
             android:hint="Max $/night"
             android:inputType="numberDecimal"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            android:background="@null" />
 
         <EditText
             android:id="@+id/etMinRating"
@@ -113,7 +123,8 @@
             android:layout_marginStart="8dp"
             android:hint="Min rating"
             android:inputType="numberDecimal"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            android:background="@null" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnApplyFilters"
@@ -122,7 +133,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:text="Apply"
-            android:textAllCaps="false" />
+            android:textAllCaps="false"
+            app:cornerRadius="12dp" />
     </LinearLayout>
 
     <!-- Category Chips (Horizontal Scroll) -->
@@ -148,8 +160,10 @@
                 android:text="All"
                 android:checked="true"
                 app:chipBackgroundColor="@color/chipBgLight"
-                android:textColor="@color/primaryRed"
-                app:chipCornerRadius="20dp"
+                android:textColor="@color/premiumAccentDeep"
+                app:chipCornerRadius="24dp"
+                app:chipStrokeWidth="1dp"
+                app:chipStrokeColor="@color/premiumOutlineMuted"
                 android:layout_marginEnd="8dp" />
 
             <com.google.android.material.chip.Chip
@@ -157,9 +171,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="🏖️ Beach"
-                app:chipBackgroundColor="@color/chipBgLight"
+                app:chipBackgroundColor="?attr/colorSurface"
                 android:textColor="@color/chipTextLight"
-                app:chipCornerRadius="20dp"
+                app:chipCornerRadius="24dp"
+                app:chipStrokeWidth="1dp"
+                app:chipStrokeColor="@color/premiumOutline"
                 android:layout_marginEnd="8dp" />
 
             <com.google.android.material.chip.Chip
@@ -167,9 +183,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="🏔️ Mountain"
-                app:chipBackgroundColor="@color/chipBgLight"
+                app:chipBackgroundColor="?attr/colorSurface"
                 android:textColor="@color/chipTextLight"
-                app:chipCornerRadius="20dp"
+                app:chipCornerRadius="24dp"
+                app:chipStrokeWidth="1dp"
+                app:chipStrokeColor="@color/premiumOutline"
                 android:layout_marginEnd="8dp" />
 
             <com.google.android.material.chip.Chip
@@ -177,9 +195,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="🏙️ City"
-                app:chipBackgroundColor="@color/chipBgLight"
+                app:chipBackgroundColor="?attr/colorSurface"
                 android:textColor="@color/chipTextLight"
-                app:chipCornerRadius="20dp"
+                app:chipCornerRadius="24dp"
+                app:chipStrokeWidth="1dp"
+                app:chipStrokeColor="@color/premiumOutline"
                 android:layout_marginEnd="8dp" />
 
             <com.google.android.material.chip.Chip
@@ -187,9 +207,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="🌿 Village"
-                app:chipBackgroundColor="@color/chipBgLight"
+                app:chipBackgroundColor="?attr/colorSurface"
                 android:textColor="@color/chipTextLight"
-                app:chipCornerRadius="20dp"
+                app:chipCornerRadius="24dp"
+                app:chipStrokeWidth="1dp"
+                app:chipStrokeColor="@color/premiumOutline"
                 android:layout_marginEnd="8dp" />
 
         </LinearLayout>
@@ -200,12 +222,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Recommended for you"
-        android:textSize="18sp"
+        android:textSize="19sp"
+        android:letterSpacing="0.01"
         android:textStyle="bold"
         android:textColor="?android:textColorPrimary"
+        android:fontFamily="sans-serif-medium"
         android:paddingStart="20dp"
         android:paddingEnd="20dp"
-        android:paddingTop="8dp" />
+        android:paddingTop="12dp" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvRecommended"
@@ -231,8 +255,9 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:text="Popular Listings"
-            android:textSize="20sp"
+            android:text="Popular listings"
+            android:textSize="19sp"
+            android:letterSpacing="0.01"
             android:textStyle="bold"
             android:textColor="?android:textColorPrimary"
             android:fontFamily="sans-serif-medium" />
@@ -242,7 +267,8 @@
             android:layout_height="wrap_content"
             android:text="See all"
             android:textSize="14sp"
-            android:textColor="@color/primaryRed" />
+            android:textStyle="bold"
+            android:textColor="@color/premiumAccentDeep" />
 
     </LinearLayout>
 

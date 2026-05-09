@@ -12,7 +12,7 @@
         <item name="colorSurfaceVariant">@color/lightSurfaceVariant</item>
         <item name="android:textColorPrimary">@color/textDark</item>
         <item name="android:textColorSecondary">@color/textMedium</item>
-        <item name="android:statusBarColor">@color/primaryRedDark</item>
+        <item name="android:statusBarColor">@color/premiumAccentDeep</item>
         <item name="android:navigationBarColor">@color/lightSurface</item>
         <item name="android:windowLightStatusBar" tools:targetApi="m">false</item>
     </style>

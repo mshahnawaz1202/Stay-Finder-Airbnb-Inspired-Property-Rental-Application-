@@ -33,10 +33,14 @@ class StayFinderApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         FirebaseApp.initializeApp(this)
-        val db = FirebaseFirestore.getInstance()
-        db.firestoreSettings = FirebaseFirestoreSettings.Builder()
-            .setPersistenceEnabled(true)
-            .build()
+        try {
+            val db = FirebaseFirestore.getInstance()
+            db.firestoreSettings = FirebaseFirestoreSettings.Builder()
+                .setPersistenceEnabled(true)
+                .build()
+        } catch (_: Exception) {
+            // Persistence already enabled or API deprecated — safe to ignore
+        }
 
         ProcessLifecycleOwner.get().lifecycle.addObserver(object : DefaultLifecycleObserver {
             override fun onStart(owner: LifecycleOwner) {
