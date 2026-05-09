@@ -2,6 +2,7 @@ package com.example.stayfinder.firebase
 
 import com.example.stayfinder.Property
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.DocumentChange
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
@@ -23,29 +24,47 @@ class FirestoreListingRepository {
     fun listenAll(onUpdate: (List<Property>) -> Unit): ListenerRegistration {
         return listings.addSnapshotListener { snap, error ->
             if (error != null || snap == null) return@addSnapshotListener
+
             val list = snap.documents.mapNotNull { docToProperty(it) }
                 .sortedByDescending { it.createdAtMillis }
+
             onUpdate(list)
         }
     }
 
-    fun attachBackgroundListingListener(onRemoteChange: (List<ListingChange>) -> Unit) {
+    fun attachBackgroundListingListener(
+        onRemoteChange: (List<ListingChange>) -> Unit
+    ) {
         backgroundRegistration?.remove()
+
         backgroundRegistration = listings.addSnapshotListener { snap, error ->
+
             if (error != null || snap == null) return@addSnapshotListener
+
             val myUid = FirebaseAuth.getInstance().currentUser?.uid
+
             val changes = snap.documentChanges.mapNotNull { change ->
+
                 val doc = change.document
-                if (doc.metadata.hasPendingWrites) return@mapNotNull null
+
+
+                if (change.type != DocumentChange.Type.ADDED) {
+                    return@mapNotNull null
+                }
+
                 val owner = doc.getString(FIELD_OWNER_UID)
                 val title = doc.getString(FIELD_TITLE)
+
                 ListingChange(
                     title = title,
                     ownerUid = owner,
                     isFromMe = owner != null && owner == myUid
                 )
             }
-            if (changes.isNotEmpty()) onRemoteChange(changes)
+
+            if (changes.isNotEmpty()) {
+                onRemoteChange(changes)
+            }
         }
     }
 
@@ -65,9 +84,12 @@ class FirestoreListingRepository {
         longitude: Double,
         tags: List<String>
     ): String {
+
         val owner = FirebaseAuth.getInstance().currentUser?.uid
             ?: throw IllegalStateException("Must be signed in to host")
+
         val priceDisplay = "$${pricePerNight.toInt()}/night"
+
         val data = hashMapOf<String, Any>(
             FIELD_TITLE to title,
             FIELD_DESCRIPTION to description,
@@ -86,6 +108,7 @@ class FirestoreListingRepository {
             FIELD_TAGS to tags,
             FIELD_CREATED_AT to FieldValue.serverTimestamp()
         )
+
         val ref = listings.document()
         ref.set(data).await()
         return ref.id
@@ -97,31 +120,40 @@ class FirestoreListingRepository {
         locationPrefix: String?,
         tag: String?
     ): List<Property> {
+
         val snap = listings.get().await()
+
         var list = snap.documents.mapNotNull { docToProperty(it) }
+
         if (maxPrice != null) {
             list = list.filter { it.priceValue <= maxPrice }
         }
+
         if (minRating != null) {
             list = list.filter { (it.rating.toDoubleOrNull() ?: 0.0) >= minRating }
         }
+
         if (!locationPrefix.isNullOrBlank()) {
             val p = locationPrefix.trim().lowercase()
             list = list.filter { it.location.lowercase().contains(p) }
         }
+
         if (!tag.isNullOrBlank() && tag != "all") {
             val t = tag.trim().lowercase()
             list = list.filter { prop ->
                 prop.tags.any { it.lowercase().contains(t) } ||
-                    prop.title.lowercase().contains(t) ||
-                    prop.description.lowercase().contains(t)
+                        prop.title.lowercase().contains(t) ||
+                        prop.description.lowercase().contains(t)
             }
         }
+
         return list.sortedByDescending { it.createdAtMillis }
     }
 
     companion object {
+
         const val COL_LISTINGS = "listings"
+
         const val FIELD_TITLE = "title"
         const val FIELD_DESCRIPTION = "description"
         const val FIELD_PRICE_PER_NIGHT = "pricePerNight"
@@ -140,16 +172,24 @@ class FirestoreListingRepository {
         const val FIELD_CREATED_AT = "createdAt"
 
         fun docToProperty(doc: DocumentSnapshot): Property? {
+
             val title = doc.getString(FIELD_TITLE) ?: return null
+
             val priceDisplay = doc.getString(FIELD_PRICE_DISPLAY)
                 ?: doc.getDouble(FIELD_PRICE_PER_NIGHT)?.let { "$${it.toInt()}/night" }
                 ?: ""
+
             val priceValue = doc.getDouble(FIELD_PRICE_PER_NIGHT) ?: 0.0
-            val createdAt = doc.getTimestamp(FIELD_CREATED_AT)?.toDate()?.time ?: 0L
-            val tags: ArrayList<String> = (doc.get(FIELD_TAGS) as? Iterable<*>)
+
+            val createdAt = doc.getTimestamp(FIELD_CREATED_AT)
+                ?.toDate()
+                ?.time ?: 0L
+
+            val tags = (doc.get(FIELD_TAGS) as? Iterable<*>)
                 ?.mapNotNull { it as? String }
                 ?.toCollection(ArrayList())
                 ?: arrayListOf()
+
             return Property(
                 id = doc.id,
                 title = title,

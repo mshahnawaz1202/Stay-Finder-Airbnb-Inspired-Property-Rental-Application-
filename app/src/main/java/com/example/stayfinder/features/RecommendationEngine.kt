@@ -1,6 +1,7 @@
 package com.example.stayfinder.features
 
 import com.example.stayfinder.Property
+import kotlin.collections.map
 
 /**
  * Simple behavior-based suggestions: boost listings that match property types
@@ -29,7 +30,9 @@ object RecommendationEngine {
                         f.tags.any { ft -> ft.equals(tag, ignoreCase = true) }
                     }
                 }
-                val score = typeScore * 3 + tagOverlap + listing.rating.toDoubleOrNull()?.toInt() ?: 0
+                val ratingScore = listing.rating.toDoubleOrNull()?.toInt() ?: 0
+                val score = typeScore * 3 + tagOverlap + ratingScore
+
                 listing to score
             }
             .sortedByDescending { it.second }

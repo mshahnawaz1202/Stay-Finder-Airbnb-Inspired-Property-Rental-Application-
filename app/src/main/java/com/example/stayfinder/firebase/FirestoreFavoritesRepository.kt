@@ -1,6 +1,7 @@
 package com.example.stayfinder.firebase
 
 import com.example.stayfinder.Property
+import com.google.firebase.firestore.DocumentChange
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ListenerRegistration
@@ -31,6 +32,7 @@ class FirestoreFavoritesRepository {
 
     suspend fun setFavorite(userId: String, property: Property, note: String = "") {
         val id = docId(userId, property.id)
+
         val data = hashMapOf<String, Any>(
             FIELD_USER_ID to userId,
             FIELD_LISTING_ID to property.id,
@@ -42,6 +44,7 @@ class FirestoreFavoritesRepository {
             FIELD_RATING to property.rating,
             FIELD_UPDATED_AT to FieldValue.serverTimestamp()
         )
+
         favorites.document(id).set(data, SetOptions.merge()).await()
     }
 
@@ -58,9 +61,12 @@ class FirestoreFavoritesRepository {
         userId: String,
         onUpdate: (List<FavoriteFirestoreItem>) -> Unit
     ): ListenerRegistration {
-        return favorites.whereEqualTo(FIELD_USER_ID, userId)
+        return favorites
+            .whereEqualTo(FIELD_USER_ID, userId)
             .addSnapshotListener { snap, error ->
+
                 if (error != null || snap == null) return@addSnapshotListener
+
                 val items = snap.documents.mapNotNull { doc ->
                     FavoriteFirestoreItem(
                         listingId = doc.getString(FIELD_LISTING_ID) ?: return@mapNotNull null,
@@ -72,6 +78,7 @@ class FirestoreFavoritesRepository {
                         rating = doc.getString(FIELD_RATING) ?: ""
                     )
                 }
+
                 onUpdate(items)
             }
     }
@@ -81,18 +88,31 @@ class FirestoreFavoritesRepository {
         onRemoteChange: (List<FavoriteRemoteChange>) -> Unit
     ) {
         backgroundRegistration?.remove()
-        backgroundRegistration = favorites.whereEqualTo(FIELD_USER_ID, userId)
+
+        backgroundRegistration = favorites
+            .whereEqualTo(FIELD_USER_ID, userId)
             .addSnapshotListener { snap, error ->
+
                 if (error != null || snap == null) return@addSnapshotListener
+
                 val changes = snap.documentChanges.mapNotNull { change ->
+
+                  
+                    if (change.type != DocumentChange.Type.ADDED) {
+                        return@mapNotNull null
+                    }
+
                     val doc = change.document
-                    if (doc.metadata.hasPendingWrites) return@mapNotNull null
+
                     FavoriteRemoteChange(
                         title = doc.getString(FIELD_TITLE),
                         isFromMe = false
                     )
                 }
-                if (changes.isNotEmpty()) onRemoteChange(changes)
+
+                if (changes.isNotEmpty()) {
+                    onRemoteChange(changes)
+                }
             }
     }
 
