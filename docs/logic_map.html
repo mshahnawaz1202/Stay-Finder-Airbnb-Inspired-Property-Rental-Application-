@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>StayFinder — Logic Map</title>
+  <style>
+    body { font-family: system-ui, sans-serif; max-width: 900px; margin: 2rem auto; line-height: 1.5; color: #222; }
+    h1, h2 { color: #c62828; }
+    code, pre { background: #f5f5f5; padding: 0.2em 0.4em; border-radius: 4px; }
+    pre { padding: 1rem; overflow: auto; }
+    a { color: #1565c0; }
+    @media print { body { margin: 1cm; } }
+  </style>
+</head>
+<body>
+  <h1>StayFinder — Logic Map (print to PDF via browser)</h1>
+  <p>Use <strong>Print → Save as PDF</strong> to produce <code>logic_map.pdf</code>.</p>
+
+  <h2>1. System architecture</h2>
+  <ul>
+    <li><strong>Firebase Auth</strong> — Email/password + Google; session via <code>FirebaseAuth</code>; routing in <code>AuthRouterActivity</code>.</li>
+    <li><strong>Cloud Firestore</strong> — Collections: <code>users</code>, <code>listings</code>, <code>favorites</code>; persistence enabled in <code>StayFinderApplication</code>.</li>
+    <li><strong>FCM</strong> — <code>StayFinderFirebaseMessagingService</code>; token stored on <code>users.fcmToken</code>.</li>
+    <li><strong>Fragments</strong> — Home, Map, Profile, Host, Bookings, Detail; auth: <code>LoginFragment</code>, <code>RegisterFragment</code>.</li>
+    <li><strong>Jetpack Compose</strong> — Favorites tab: <code>FavoritesComposeRoute</code> in <code>ui/compose/</code>, hosted by <code>FavoritesFragment</code>.</li>
+  </ul>
+
+  <h2>2. Feature → code mapping</h2>
+  <pre>F1 Auth     → auth/AuthRouterActivity, auth/AuthActivity, auth/LoginFragment, auth/RegisterFragment, firebase/AuthRepository
+F2 Firestore → firebase/FirestoreListingRepository, FirestoreFavoritesRepository, FirestoreUserRepository
+Session      → AuthRouterActivity (launcher), MainActivity onStart guard
+FCM          → messaging/StayFinderFirebaseMessagingService, messaging/AppNotificationCenter, StayFinderApplication (token sync)
+Compose UI   → ui/compose/FavoritesComposeScreen.kt, Theme.kt, FavoritesFragment.kt
+Maps upgrade → MapFragment.kt + Firestore listing coordinates
+Search/filters → HomeFragment.kt + fragment_home (chips, price, rating)
+Recommendations → features/RecommendationEngine.kt + HomeFragment horizontal list
+Offline mirror → features/offline/OfflineFavoriteMirror.kt (SharedPreferences backup; Firestore SDK handles primary offline cache)</pre>
+
+  <h2>3. Self-researched features</h2>
+  <h3>A. Maps integration (listing markers)</h3>
+  <p><strong>Why:</strong> Show real Firestore listings on an embedded Google Map with custom markers.</p>
+  <p><strong>Docs:</strong> <a href="https://developers.google.com/maps/documentation/android-sdk/map">Maps SDK for Android — Add a map</a>,
+  <a href="https://developers.google.com/maps/documentation/android-sdk/marker">Markers</a></p>
+
+  <h3>B. Search + filters + real-time Firestore UI</h3>
+  <p><strong>Why:</strong> Filter by text, max price, min rating, and category chips while the home feed syncs live from Firestore snapshots.</p>
+  <p><strong>Docs:</strong> <a href="https://firebase.google.com/docs/firestore/query-data/listen">Listen for realtime updates</a>,
+  <a href="https://firebase.google.com/docs/firestore/query-data/queries">Queries</a> (client-side filtering used to avoid index setup in class projects)</p>
+
+  <h3>C. Offline favorites mirror (extra)</h3>
+  <p><strong>Why:</strong> Demonstrates a local mirror of favorite ids alongside Firestore offline persistence.</p>
+  <p><strong>Docs:</strong> <a href="https://firebase.google.com/docs/firestore/manage-data/enable-offline">Firestore offline persistence</a></p>
+
+  <h3>D. Recommendation heuristic</h3>
+  <p><strong>Why:</strong> Lightweight “for you” strip based on favorited property types and tags.</p>
+  <p><strong>Docs:</strong> N/A (custom logic); related: <a href="https://developer.android.com/topic/libraries/architecture/recommendation">Android recommendation overview</a></p>
+
+  <h2>4. Flow (auth → main → logout)</h2>
+  <pre>Launcher: AuthRouterActivity
+  ├─ user != null → MainActivity (bottom nav, Firestore listeners)
+  └─ user == null → AuthActivity → LoginFragment / RegisterFragment
+        → success → MainActivity
+
+Logout: ProfileFragment → GoogleSignIn.signOut + AuthRepository.signOut → AuthRouterActivity</pre>
+
+  <h2>5. Firestore shape (reference)</h2>
+  <pre>users/{uid}     — email, displayName, fcmToken, createdAt
+listings/{id}   — title, description, pricePerNight, priceDisplay, location, lat/lng, ownerUid, tags[], rating, ...
+favorites/{userId_listingId} — userId, listingId, note, denormalized title/price/location/imageUrl/rating, updatedAt</pre>
+</body>
+</html>

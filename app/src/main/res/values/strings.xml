@@ -1,4 +1,17 @@
 <resources>
     <string name="app_name">Stay Finder</string>
     <string name="remove_from_favorites">Remove from favorites</string>
+    <string name="welcome_stayfinder">Welcome to StayFinder</string>
+    <string name="sign_in_to_continue">Sign in to continue</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="password_min">Password (6+ characters)</string>
+    <string name="display_name">Display name</string>
+    <string name="login">Login</string>
+    <string name="register">Create account</string>
+    <string name="sign_in_with_google">Sign in with Google</string>
+    <string name="create_account">New here? Create an account</string>
+    <string name="create_account_btn">Register</string>
+    <string name="already_have_account">Already have an account? Sign in</string>
+    <string name="default_web_client_id">68787921418-6fnp17gqq73l7juevieb9u027cvloas6.apps.googleusercontent.com</string>
 </resources>

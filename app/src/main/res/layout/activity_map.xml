@@ -115,7 +115,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/house" />
+                        android:src="@drawable/ic_home" />
 
                 </androidx.cardview.widget.CardView>
 

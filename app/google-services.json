@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "68787921418",
+    "firebase_url": "https://stayfree-e1d24-default-rtdb.firebaseio.com",
+    "project_id": "stayfree-e1d24",
+    "storage_bucket": "stayfree-e1d24.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:68787921418:android:1a5be4bba0cc5a245635f3",
+        "android_client_info": {
+          "package_name": "com.example.stayfinder"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "68787921418-6fnp17gqq73l7juevieb9u027cvloas6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDx2nl8qS3-3DtiHx_DE8JJTw7hciB-lCU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "68787921418-6fnp17gqq73l7juevieb9u027cvloas6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

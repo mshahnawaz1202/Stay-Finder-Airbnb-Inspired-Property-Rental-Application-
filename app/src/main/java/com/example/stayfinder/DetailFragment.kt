@@ -9,13 +9,18 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import com.example.stayfinder.database.DatabaseManager
+import com.example.stayfinder.firebase.FirestoreFavoritesRepository
 import com.example.stayfinder.models.Booking
 import com.google.android.material.button.MaterialButton
+import com.google.firebase.auth.FirebaseAuth
+import kotlinx.coroutines.launch
 
 class DetailFragment : Fragment() {
 
     private lateinit var dbManager: DatabaseManager
+    private val favRepo = FirestoreFavoritesRepository()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -33,7 +38,6 @@ class DetailFragment : Fragment() {
         }
 
         if (property != null) {
-            // Bind UI
             view.findViewById<TextView>(R.id.tvDetailTitle).text = property.title
             view.findViewById<TextView>(R.id.tvDetailLocation).text = property.location
             view.findViewById<TextView>(R.id.tvDetailPrice).text = property.price
@@ -43,49 +47,71 @@ class DetailFragment : Fragment() {
             view.findViewById<TextView>(R.id.tvDetailBathrooms).text = "${property.bathrooms} Bathrooms"
             view.findViewById<TextView>(R.id.tvDetailDescription).text = property.description
 
-            // Favorite Button
             val imgFavorite = view.findViewById<ImageView>(R.id.imgFavoriteBtn)
-            val propertyId = property.id.toIntOrNull() ?: -1
-            
-            if (propertyId != -1) {
-                var isFav = dbManager.isFavorite(propertyId)
-                updateFavoriteIcon(imgFavorite, isFav)
+            val uid = FirebaseAuth.getInstance().currentUser?.uid
 
-                imgFavorite.setOnClickListener {
-                    if (isFav) {
-                        dbManager.removeFavorite(propertyId)
-                        isFav = false
-                        Toast.makeText(context, "Removed from Favorites", Toast.LENGTH_SHORT).show()
+            fun refreshFavoriteUi(isFav: Boolean) {
+                updateFavoriteIcon(imgFavorite, isFav)
+            }
+
+            lifecycleScope.launch {
+                val isFav = if (uid != null) {
+                    favRepo.isFavorite(uid, property.id)
+                } else {
+                    dbManager.isFavorite(property.id)
+                }
+                refreshFavoriteUi(isFav)
+            }
+
+            imgFavorite.setOnClickListener {
+                lifecycleScope.launch {
+                    if (uid != null) {
+                        val currently = favRepo.isFavorite(uid, property.id)
+                        if (currently) {
+                            favRepo.removeFavorite(uid, property.id)
+                            Toast.makeText(context, "Removed from Favorites", Toast.LENGTH_SHORT).show()
+                            refreshFavoriteUi(false)
+                        } else {
+                            favRepo.setFavorite(uid, property)
+                            Toast.makeText(context, "Added to Favorites", Toast.LENGTH_SHORT).show()
+                            refreshFavoriteUi(true)
+                        }
                     } else {
-                        dbManager.addFavorite(property)
-                        isFav = true
-                        Toast.makeText(context, "Added to Favorites ❤️", Toast.LENGTH_SHORT).show()
+                        var local = dbManager.isFavorite(property.id)
+                        if (local) {
+                            dbManager.removeFavorite(property.id)
+                            local = false
+                            Toast.makeText(context, "Removed from Favorites", Toast.LENGTH_SHORT).show()
+                        } else {
+                            dbManager.addFavorite(property)
+                            local = true
+                            Toast.makeText(context, "Added to Favorites", Toast.LENGTH_SHORT).show()
+                        }
+                        refreshFavoriteUi(local)
                     }
-                    updateFavoriteIcon(imgFavorite, isFav)
                 }
             }
 
-            // Back Button
             view.findViewById<ImageView>(R.id.imgBackBtn).setOnClickListener {
                 requireActivity().supportFragmentManager.popBackStack()
             }
 
-            // F3: Book Now Button (Add to Bookings)
             val btnBook = view.findViewById<MaterialButton>(R.id.btnBookNow)
             btnBook.text = "Book Now — ${property.price}"
             btnBook.setOnClickListener {
+                val guest = FirebaseAuth.getInstance().currentUser?.displayName ?: "Guest"
                 val newBooking = Booking(
-                    propertyId = propertyId,
+                    propertyId = property.id,
                     propertyName = property.title,
-                    checkInDate = "2025-05-10", // Sample date
-                    checkOutDate = "2025-05-15", // Sample date
-                    guestName = "User Name", // Sample name
-                    totalPrice = property.price // Simplified
+                    checkInDate = "2026-05-10",
+                    checkOutDate = "2026-05-15",
+                    guestName = guest,
+                    totalPrice = property.price
                 )
-                
+
                 val result = dbManager.addBooking(newBooking)
                 if (result != -1L) {
-                    Toast.makeText(context, "Booking saved to local database! 📅", Toast.LENGTH_LONG).show()
+                    Toast.makeText(context, "Booking saved", Toast.LENGTH_LONG).show()
                 } else {
                     Toast.makeText(context, "Failed to save booking", Toast.LENGTH_SHORT).show()
                 }

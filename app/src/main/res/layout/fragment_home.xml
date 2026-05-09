@@ -87,6 +87,44 @@
 
     </LinearLayout>
 
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="8dp"
+        android:gravity="center_vertical">
+
+        <EditText
+            android:id="@+id/etMaxPrice"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:hint="Max $/night"
+            android:inputType="numberDecimal"
+            android:textSize="14sp" />
+
+        <EditText
+            android:id="@+id/etMinRating"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:hint="Min rating"
+            android:inputType="numberDecimal"
+            android:textSize="14sp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnApplyFilters"
+            style="@style/Widget.Material3.Button.TonalButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="Apply"
+            android:textAllCaps="false" />
+    </LinearLayout>
+
     <!-- Category Chips (Horizontal Scroll) -->
     <HorizontalScrollView
         android:layout_width="match_parent"
@@ -104,6 +142,7 @@
             android:layout_height="wrap_content">
 
             <com.google.android.material.chip.Chip
+                android:id="@+id/chipAll"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="All"
@@ -114,6 +153,7 @@
                 android:layout_marginEnd="8dp" />
 
             <com.google.android.material.chip.Chip
+                android:id="@+id/chipBeach"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="🏖️ Beach"
@@ -123,6 +163,7 @@
                 android:layout_marginEnd="8dp" />
 
             <com.google.android.material.chip.Chip
+                android:id="@+id/chipMountain"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="🏔️ Mountain"
@@ -132,6 +173,7 @@
                 android:layout_marginEnd="8dp" />
 
             <com.google.android.material.chip.Chip
+                android:id="@+id/chipCity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="🏙️ City"
@@ -141,6 +183,7 @@
                 android:layout_marginEnd="8dp" />
 
             <com.google.android.material.chip.Chip
+                android:id="@+id/chipVillage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="🌿 Village"
@@ -152,6 +195,26 @@
         </LinearLayout>
 
     </HorizontalScrollView>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Recommended for you"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:textColor="?android:textColorPrimary"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:paddingTop="8dp" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvRecommended"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clipToPadding="false"
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp"
+        android:paddingBottom="8dp" />
 
     <!-- Section Header -->
     <LinearLayout

@@ -41,8 +41,8 @@ class HomeAdapter(
         // Use Glide for image loading
         com.bumptech.glide.Glide.with(holder.itemView.context)
             .load(property.imageUrl)
-            .placeholder(R.drawable.house)
-            .error(R.drawable.house)
+            .placeholder(R.drawable.ic_home)
+            .error(R.drawable.ic_home)
             .into(holder.imgHouse)
 
         holder.itemView.setOnClickListener {

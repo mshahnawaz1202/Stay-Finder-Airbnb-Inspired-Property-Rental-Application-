@@ -14,5 +14,10 @@ data class Property(
     val bedrooms: Int = 1,
     val bathrooms: Int = 1,
     val propertyType: String = "House",
-    val imageUrl: String = ""
+    val imageUrl: String = "",
+    val createdAtMillis: Long = 0L,
+    val tags: ArrayList<String> = arrayListOf(),
+    val ownerUid: String = "",
+    val latitude: Double = 0.0,
+    val longitude: Double = 0.0
 ) : Serializable

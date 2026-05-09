@@ -3,7 +3,6 @@ package com.example.stayfinder.repository
 import com.example.stayfinder.Property
 import com.example.stayfinder.api.RetrofitInstance
 import com.example.stayfinder.models.PropertyResponse
-import retrofit2.Response
 
 class PropertyRepository {
     suspend fun getProperties(): List<Property> {
@@ -18,15 +17,19 @@ class PropertyRepository {
     }
 
     private fun mapToProperty(apiModel: PropertyResponse): Property {
+        val priceVal = (100..500).random().toDouble()
         return Property(
             id = apiModel.id.toString(),
             title = apiModel.title,
-            location = "Sample Location", // API doesn't provide this
+            location = "Sample Location",
             description = "This is a beautiful property fetched from API.",
-            price = "$${(100..500).random()}/night",
-            priceValue = (100..500).random().toDouble(),
+            price = "$${priceVal.toInt()}/night",
+            priceValue = priceVal,
             rating = String.format("%.1f", (3.5 + (1.5 * Math.random()))),
-            imageUrl = apiModel.thumbnailUrl
+            imageUrl = apiModel.thumbnailUrl,
+            tags = arrayListOf("city"),
+            latitude = 0.0,
+            longitude = 0.0
         )
     }
 }

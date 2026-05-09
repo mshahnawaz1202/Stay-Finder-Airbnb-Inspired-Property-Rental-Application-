@@ -8,7 +8,6 @@ import com.example.stayfinder.models.Booking
 class DatabaseManager(context: Context) {
     private val dbHelper = DatabaseHelper(context)
 
-    // CREATE
     fun addBooking(booking: Booking): Long {
         val db = dbHelper.writableDatabase
         val values = ContentValues().apply {
@@ -24,7 +23,6 @@ class DatabaseManager(context: Context) {
         return id
     }
 
-    // READ
     fun getAllBookings(): List<Booking> {
         val bookings = mutableListOf<Booking>()
         val db = dbHelper.readableDatabase
@@ -40,7 +38,6 @@ class DatabaseManager(context: Context) {
         return bookings
     }
 
-    // UPDATE
     fun updateBooking(booking: Booking): Int {
         val db = dbHelper.writableDatabase
         val values = ContentValues().apply {
@@ -48,24 +45,34 @@ class DatabaseManager(context: Context) {
             put(DatabaseHelper.COL_BOOK_CHECK_OUT, booking.checkOutDate)
             put(DatabaseHelper.COL_BOOK_GUEST_NAME, booking.guestName)
         }
-        val result = db.update(DatabaseHelper.TABLE_BOOKINGS, values, "${DatabaseHelper.COL_BOOK_ID} = ?", arrayOf(booking.id.toString()))
+        val result = db.update(
+            DatabaseHelper.TABLE_BOOKINGS,
+            values,
+            "${DatabaseHelper.COL_BOOK_ID} = ?",
+            arrayOf(booking.id.toString())
+        )
         db.close()
         return result
     }
 
-    // DELETE
     fun deleteBooking(id: Int): Int {
         val db = dbHelper.writableDatabase
-        val result = db.delete(DatabaseHelper.TABLE_BOOKINGS, "${DatabaseHelper.COL_BOOK_ID} = ?", arrayOf(id.toString()))
+        val result = db.delete(
+            DatabaseHelper.TABLE_BOOKINGS,
+            "${DatabaseHelper.COL_BOOK_ID} = ?",
+            arrayOf(id.toString())
+        )
         db.close()
         return result
     }
 
-    // F5: Search (LIKE)
     fun searchBookings(query: String): List<Booking> {
         val bookings = mutableListOf<Booking>()
         val db = dbHelper.readableDatabase
-        val cursor = db.rawQuery("SELECT * FROM ${DatabaseHelper.TABLE_BOOKINGS} WHERE ${DatabaseHelper.COL_BOOK_PROPERTY_NAME} LIKE ?", arrayOf("%$query%"))
+        val cursor = db.rawQuery(
+            "SELECT * FROM ${DatabaseHelper.TABLE_BOOKINGS} WHERE ${DatabaseHelper.COL_BOOK_PROPERTY_NAME} LIKE ?",
+            arrayOf("%$query%")
+        )
 
         if (cursor.moveToFirst()) {
             do {
@@ -77,12 +84,14 @@ class DatabaseManager(context: Context) {
         return bookings
     }
 
-    // F5: Sort (ORDER BY)
     fun sortBookingsByDate(ascending: Boolean): List<Booking> {
         val bookings = mutableListOf<Booking>()
         val db = dbHelper.readableDatabase
         val order = if (ascending) "ASC" else "DESC"
-        val cursor = db.rawQuery("SELECT * FROM ${DatabaseHelper.TABLE_BOOKINGS} ORDER BY ${DatabaseHelper.COL_BOOK_CHECK_IN} $order", null)
+        val cursor = db.rawQuery(
+            "SELECT * FROM ${DatabaseHelper.TABLE_BOOKINGS} ORDER BY ${DatabaseHelper.COL_BOOK_CHECK_IN} $order",
+            null
+        )
 
         if (cursor.moveToFirst()) {
             do {
@@ -94,11 +103,10 @@ class DatabaseManager(context: Context) {
         return bookings
     }
 
-    // FAVORITES CRUD
     fun addFavorite(property: com.example.stayfinder.Property): Long {
         val db = dbHelper.writableDatabase
         val values = ContentValues().apply {
-            put(DatabaseHelper.COL_FAV_PROPERTY_ID, property.id.toIntOrNull() ?: 0)
+            put(DatabaseHelper.COL_FAV_PROPERTY_ID, property.id)
             put(DatabaseHelper.COL_FAV_PROPERTY_NAME, property.title)
             put(DatabaseHelper.COL_FAV_LOCATION, property.location)
             put(DatabaseHelper.COL_FAV_PRICE, property.price)
@@ -109,18 +117,30 @@ class DatabaseManager(context: Context) {
         return id
     }
 
-    fun isFavorite(propertyId: Int): Boolean {
+    fun isFavorite(propertyId: String): Boolean {
         val db = dbHelper.readableDatabase
-        val cursor = db.query(DatabaseHelper.TABLE_FAVORITES, arrayOf(DatabaseHelper.COL_FAV_ID), "${DatabaseHelper.COL_FAV_PROPERTY_ID} = ?", arrayOf(propertyId.toString()), null, null, null)
+        val cursor = db.query(
+            DatabaseHelper.TABLE_FAVORITES,
+            arrayOf(DatabaseHelper.COL_FAV_ID),
+            "${DatabaseHelper.COL_FAV_PROPERTY_ID} = ?",
+            arrayOf(propertyId),
+            null,
+            null,
+            null
+        )
         val exists = cursor.count > 0
         cursor.close()
         db.close()
         return exists
     }
 
-    fun removeFavorite(propertyId: Int): Int {
+    fun removeFavorite(propertyId: String): Int {
         val db = dbHelper.writableDatabase
-        val result = db.delete(DatabaseHelper.TABLE_FAVORITES, "${DatabaseHelper.COL_FAV_PROPERTY_ID} = ?", arrayOf(propertyId.toString()))
+        val result = db.delete(
+            DatabaseHelper.TABLE_FAVORITES,
+            "${DatabaseHelper.COL_FAV_PROPERTY_ID} = ?",
+            arrayOf(propertyId)
+        )
         db.close()
         return result
     }
@@ -128,7 +148,7 @@ class DatabaseManager(context: Context) {
     private fun cursorToBooking(cursor: Cursor): Booking {
         return Booking(
             id = cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseHelper.COL_BOOK_ID)),
-            propertyId = cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseHelper.COL_BOOK_PROPERTY_ID)),
+            propertyId = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COL_BOOK_PROPERTY_ID)),
             propertyName = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COL_BOOK_PROPERTY_NAME)),
             checkInDate = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COL_BOOK_CHECK_IN)),
             checkOutDate = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COL_BOOK_CHECK_OUT)),

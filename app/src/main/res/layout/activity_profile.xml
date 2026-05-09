@@ -42,7 +42,7 @@
                     <com.google.android.material.imageview.ShapeableImageView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:src="@drawable/profile"
+                        android:src="@drawable/ic_person"
                         android:scaleType="centerCrop"
                         android:padding="3dp"
                         app:shapeAppearanceOverlay="@style/CircularImage" />
@@ -212,7 +212,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/house" />
+                        android:src="@drawable/ic_home" />
 
                 </androidx.cardview.widget.CardView>
 
@@ -306,7 +306,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/house" />
+                        android:src="@drawable/ic_home" />
 
                 </androidx.cardview.widget.CardView>
 
@@ -400,7 +400,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/house" />
+                        android:src="@drawable/ic_home" />
 
                 </androidx.cardview.widget.CardView>
 
@@ -479,7 +479,7 @@
                 android:id="@+id/btnEditProfile"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Edit Profile"
+                android:text="Host a listing"
                 android:textColor="@color/white"
                 android:textSize="15sp"
                 android:textAllCaps="false"
