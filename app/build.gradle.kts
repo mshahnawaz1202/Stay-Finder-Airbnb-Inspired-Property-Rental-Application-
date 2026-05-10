@@ -58,6 +58,7 @@ dependencies {
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.lifecycle.runtime.compose)
     implementation(libs.androidx.lifecycle.viewmodel.compose)
+    implementation(libs.firebase.database)
     debugImplementation(libs.androidx.compose.ui.tooling)
 
     implementation(libs.coil.compose)
