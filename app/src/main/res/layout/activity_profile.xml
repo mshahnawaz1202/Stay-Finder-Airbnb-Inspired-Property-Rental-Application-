@@ -489,6 +489,22 @@
                 android:paddingTop="12dp"
                 android:paddingBottom="12dp" />
 
+            <!-- Dark Mode Toggle Button -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnToggleTheme"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Toggle Dark Mode"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                android:textAllCaps="false"
+                android:fontFamily="sans-serif-medium"
+                app:backgroundTint="@color/primaryRed"
+                app:cornerRadius="12dp"
+                android:paddingTop="12dp"
+                android:paddingBottom="12dp" />
+
             <!-- Logout Button (Outlined) -->
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnLogout"
