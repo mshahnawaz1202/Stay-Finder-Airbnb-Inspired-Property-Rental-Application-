@@ -22,8 +22,8 @@ import com.google.firebase.auth.FirebaseAuth
 
 class HomeFragment : Fragment() {
 
-    private val listingRepo = FirestoreListingRepository()
-    private val favoritesRepo = FirestoreFavoritesRepository()
+    private val listingRepo by lazy { FirestoreListingRepository() }
+    private val favoritesRepo by lazy { FirestoreFavoritesRepository() }
 
     private var listingsRegistration: com.google.firebase.firestore.ListenerRegistration? = null
     private var favoritesRegistration: com.google.firebase.firestore.ListenerRegistration? = null

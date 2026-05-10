@@ -21,9 +21,9 @@ import kotlinx.coroutines.launch
 class StayFinderApplication : Application() {
 
     private val appScope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
-    private val listingRepo = FirestoreListingRepository()
-    private val favoritesRepo = FirestoreFavoritesRepository()
-    private val userRepo = FirestoreUserRepository()
+    private val listingRepo by lazy { FirestoreListingRepository() }
+    private val favoritesRepo by lazy { FirestoreFavoritesRepository() }
+    private val userRepo by lazy { FirestoreUserRepository() }
 
     private var listingsListenerStarted = false
     private var favoritesListenerStarted = false
