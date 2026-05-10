@@ -1,1 +1,41 @@
+# Built artifacts
+*.iml
+.gradle/
+.idea/
+/local.properties
+/.idea/caches
+/.idea/libraries
+/.idea/modules.xml
+/.idea/workspace.xml
+/.idea/navEditor.xml
+/.idea/assetWizardSettings.xml
+.DS_Store
 /build
+/captures
+.externalNativeBuild
+.cxx
+local.properties
+
+# App build outputs
+app/build/
+app/release/
+
+# Google Services (DO NOT COMMIT — contains API keys)
+# app/google-services.json
+
+# Kotlin
+*.class
+*.dex
+
+# Gradle wrapper (keep the jar and properties, not caches)
+!gradle/wrapper/gradle-wrapper.jar
+!gradle/wrapper/gradle-wrapper.properties
+
+# Additional cache and temp directories
+/caches/
+/daemon/
+/.kotlin/
+/.tmp/
+/kotlin-profile/
+/native/
+/wrapper/

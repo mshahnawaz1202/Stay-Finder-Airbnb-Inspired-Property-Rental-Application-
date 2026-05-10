@@ -1,19 +1,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme (Dark) -->
+    <!-- Base application theme. -->
     <style name="Base.Theme.StayFinder" parent="Theme.Material3.DayNight.NoActionBar">
-        <item name="colorPrimary">@color/primaryRedLight</item>
-        <item name="colorPrimaryDark">@color/darkBackground</item>
-        <item name="colorAccent">@color/accentOrange</item>
-        <item name="colorOnPrimary">@color/white</item>
-        <item name="colorSecondary">@color/accentTeal</item>
-        <item name="colorOnSecondary">@color/white</item>
-        <item name="android:colorBackground">@color/darkBackground</item>
-        <item name="colorSurface">@color/darkSurface</item>
-        <item name="colorSurfaceVariant">@color/darkSurfaceVariant</item>
-        <item name="android:textColorPrimary">@color/textOnDark</item>
-        <item name="android:textColorSecondary">@color/textOnDarkMedium</item>
-        <item name="android:statusBarColor">@color/darkBackground</item>
-        <item name="android:navigationBarColor">@color/darkSurface</item>
-        <item name="android:windowLightStatusBar" tools:targetApi="m">false</item>
+        <!-- Customize your dark theme here. -->
+        <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
     </style>
 </resources>

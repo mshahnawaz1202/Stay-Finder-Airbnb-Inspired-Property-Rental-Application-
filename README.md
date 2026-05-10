@@ -1,91 +1,118 @@
-# Stay Finder 🏠✨
+# StayFinder — Android App
 
-**Stay Finder** is a premium, Airbnb-inspired Android application built with a modern hybrid architecture. It seamlessly integrates traditional XML-based Fragments with Jetpack Compose to deliver a high-performance, visually stunning property rental experience.
-
----
-
-## 🌟 Visual Showcase
-
-| Screen | Description | Style |
-|--------|-------------|-------|
-| **Home** | Curated listings with smart categories & search. | Glassmorphism |
-| **Favorites** | Real-time wishlist managed via Jetpack Compose. | Material 3 |
-| **Map** | Geographic exploration with interactive markers. | Hybrid |
-| **Auth** | Premium onboarding with Google & Email sync. | Elevated |
+A full-featured property booking app (Airbnb-style) built with Kotlin, Jetpack Compose + Views, Firebase, and Room/SQLite.
 
 ---
 
-## 🚀 Key Features
+## 🚀 How to Open in Android Studio
 
-### 🔐 Advanced Authentication
-- **Dual-Mode Login:** Secure Email/Password and one-tap Google Sign-In.
-- **Session Persistence:** Persistent user sessions across app restarts using Firebase Auth.
-- **Form Validation:** Real-time validation and error handling for a smooth onboarding experience.
-
-### 💎 Premium UI/UX (Glassmorphism)
-- **Visual Overhaul:** Stunning design with gradient overlays, glass-effect components, and curated typography.
-- **Dark Mode Support:** A fully adaptive night theme with high-contrast surfaces and optimized color roles.
-- **Floating Navigation:** A custom, pill-shaped floating bottom navigation bar for a futuristic feel.
-
-### 📡 Real-time Data & Offline Sync
-- **Firestore Integration:** Live syncing for property listings, user profiles, and favorites.
-- **Offline Bookings:** Local SQLite-backed database for managing bookings without connectivity.
-- **Smart Search:** Dynamic filtering by category (Beach, Mountain, City), price ranges, and ratings.
-
-### 📍 Interactive Exploration
-- **Integrated Maps:** Full Google Maps integration for exploring properties geographically.
-- **Dynamic Recommendations:** Intelligent recommendation logic based on rating and popularity.
-- **Compose Surfaces:** A dedicated Favorites screen built entirely with **Jetpack Compose** and **Material 3**.
+1. **Clone / unzip** this project folder.
+2. Open **Android Studio** (Hedgehog 2023.1.1 or newer recommended).
+3. Choose **File → Open** and select the `StayFinder` root folder.
+4. Android Studio will automatically detect `settings.gradle.kts` and configure the project.
+5. Wait for Gradle sync to complete (first sync downloads dependencies — needs internet).
+6. Set up your Firebase project (see below).
+7. Press ▶ **Run** to launch on an emulator or device (API 24+).
 
 ---
 
-## 🛠️ Technology Stack
+## ⚙️ Requirements
 
-- **Language:** [Kotlin](https://kotlinlang.org/) (100%)
-- **Concurrency:** [Coroutines](https://kotlinlang.org/docs/coroutines-overview.html) & [Flow](https://kotlinlang.org/docs/flow.html)
-- **Dependency Injection:** Modular singleton patterns
-- **Backend:** [Firebase](https://firebase.google.com/) (Auth, Firestore, FCM)
-- **UI Architecture:** Hybrid (XML Fragments + Jetpack Compose)
-- **Networking:** [Retrofit 2](https://square.github.io/retrofit/) & [GSON](https://github.com/google/gson)
-- **Image Loading:** [Coil](https://coil-kt.github.io/coil/) & [Glide](https://github.com/bumptech/glide)
+| Tool | Version |
+|------|---------|
+| Android Studio | Hedgehog 2023.1.1+ (or Ladybug / Meerkat) |
+| Android SDK | API 24 minimum, API 35 compile |
+| Gradle | 8.10.2 (auto-downloaded by wrapper) |
+| Kotlin | 2.0.0 |
+| JDK | 11+ (bundled with Android Studio) |
 
 ---
 
-## 📂 Project Architecture
+## 🔥 Firebase Setup (Required)
 
-The project follows a modular structure for scalability and maintainability:
+This app uses Firebase Authentication, Firestore, Realtime Database, and Cloud Messaging.
 
-```text
-com.example.stayfinder
-├── auth/           # Login, Registration & Auth Router
-├── firebase/       # Firestore Repositories & Messaging Service
-├── ui/             # View Layer (Fragments & Custom Views)
-│   └── compose/    # Jetpack Compose Screens & Theme
-├── models/         # Domain Data Models
-├── repository/     # Data Access Layer (API & Local)
-├── features/       # Business Logic (Recommendations, Search)
-└── database/       # SQLite Storage Logic
+### Steps:
+1. Go to [Firebase Console](https://console.firebase.google.com/) and create a new project (or use an existing one).
+2. Add an **Android app** with package name: `com.stayfinder.app`
+3. Download the `google-services.json` file.
+4. **Replace** `app/google-services.json` with your downloaded file.
+5. In Firebase Console, enable:
+   - **Authentication** → Email/Password sign-in
+   - **Firestore Database** → Start in test mode
+   - **Realtime Database** → Start in test mode
+   - **Cloud Messaging** (for push notifications)
+6. Set Firestore security rules as needed for production.
+
+> ⚠️ The `google-services.json` included is a placeholder. The app **will not connect to Firebase** without your own config file.
+
+---
+
+## 📁 Project Structure
+
+```
+StayFinder/
+├── app/
+│   ├── src/main/
+│   │   ├── java/com/stayfinder/app/
+│   │   │   ├── activities/          # SplashActivity, LoginActivity, SignUpActivity,
+│   │   │   │                        #   OnboardingActivity, MainActivity
+│   │   │   ├── activities/database/ # DatabaseHelper (SQLite local cache)
+│   │   │   ├── adapters/            # RecyclerView adapters
+│   │   │   ├── compose/             # ExploreComposeActivity (Jetpack Compose screen)
+│   │   │   ├── database/            # FirestoreHelper (Firebase Firestore)
+│   │   │   ├── fragments/           # Home, Wishlist, Trips, Profile, PropertyDetail
+│   │   │   ├── models/              # Property, User, Booking, ApiPost
+│   │   │   ├── network/             # Retrofit API service + client
+│   │   │   ├── notifications/       # FCM messaging service
+│   │   │   └── repository/          # AuthRepository, PropertyRepository
+│   │   ├── res/                     # Layouts, drawables, values, menus
+│   │   └── AndroidManifest.xml
+│   ├── build.gradle.kts
+│   └── google-services.json         # ← Replace with YOUR Firebase config
+├── gradle/
+│   ├── libs.versions.toml           # Version catalog
+│   └── wrapper/                     # Gradle wrapper (8.10.2)
+├── build.gradle.kts                 # Root build file
+├── settings.gradle.kts
+├── gradle.properties
+├── gradlew / gradlew.bat
+└── README.md
 ```
 
 ---
 
-## ⚙️ Installation & Setup
+## ✨ Features
 
-1.  **Clone the Repository:**
-    ```bash
-    git clone https://github.com/mshahnawaz1202/Stay-Finder-Airbnb-Inspired-Property-Rental-Application-.git
-    ```
-2.  **Firebase Setup:**
-    - Download `google-services.json` from your Firebase project.
-    - Place it in the `app/` directory.
-    - Enable **Email/Password** and **Google** authentication in Firebase.
-3.  **Google Maps API:**
-    - Obtain an API key from [Google Cloud Console](https://console.cloud.google.com/).
-    - Add it to your `local.properties` or directly in `AndroidManifest.xml`.
-4.  **Build & Run:**
-    - Sync the project with Gradle in Android Studio.
-    - Deploy to a device with API level 24 or higher.
+- **Onboarding** — Multi-page intro with ViewPager2
+- **Auth** — Email/password login & sign-up, Google Sign-In (Credential Manager), biometric unlock
+- **Home** — Property listings, search, category chips
+- **Explore** — Jetpack Compose screen with filtering & map-ready layout
+- **Property Detail** — Full detail view, booking flow
+- **Wishlists** — Save favourite properties (local SQLite + Firestore sync)
+- **Trips** — View past and upcoming bookings
+- **Profile** — Edit profile, logout
+- **Push Notifications** — Firebase Cloud Messaging
 
 ---
 
-*Stay Finder — Redefining how you find your next home away from home.*
+## 🛠️ Build from Command Line
+
+```bash
+# Unix/macOS
+./gradlew assembleDebug
+
+# Windows
+gradlew.bat assembleDebug
+```
+
+APK will be at: `app/build/outputs/apk/debug/app-debug.apk`
+
+---
+
+## 📝 Notes
+
+- **local.properties** is auto-generated by Android Studio with your SDK path — do not commit it.
+- The app targets **API 35** (Android 15) and requires minimum **API 24** (Android 7.0).
+- Glide is used for image loading. Network images require the `INTERNET` permission (already declared).
+- SQLite (`DatabaseHelper`) is used for local caching of user and property data.

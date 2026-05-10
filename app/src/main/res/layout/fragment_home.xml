@@ -1,298 +1,148 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?android:colorBackground">
+    android:background="@color/colorBackground">
 
-    <!-- Top Bar with greeting and dark mode toggle -->
-    <LinearLayout
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
-        android:paddingStart="20dp"
-        android:paddingEnd="20dp"
-        android:paddingTop="20dp"
-        android:paddingBottom="12dp"
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:fillViewport="true">
 
         <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content">
+            android:padding="16dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/tv_greeting"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Good morning, User 👋"
+                    android:textColor="@color/colorTextDark"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true">
+
+                    <ImageView
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:src="@drawable/ic_notification_bell"
+                        android:contentDescription="Notifications" />
+
+                    <TextView
+                        android:id="@+id/tv_notification_badge"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:layout_gravity="top|end"
+                        android:background="@drawable/ic_badge_dot"
+                        android:gravity="center"
+                        android:text="3"
+                        android:textColor="@color/white"
+                        android:textSize="10sp" />
+                </FrameLayout>
+            </RelativeLayout>
+
+            <androidx.appcompat.widget.SearchView
+                android:id="@+id/search_view"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginTop="24dp"
+                android:background="@drawable/bg_search_bar"
+                app:iconifiedByDefault="false"
+                app:queryHint="@string/where_to"
+                app:queryBackground="@android:color/transparent" />
+
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:scrollbars="none">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/chip_all"
+                        style="@style/Widget.MaterialComponents.Button.TextButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_chip_selected"
+                        android:text="All"
+                        android:textColor="@color/white"
+                        app:backgroundTint="@null" />
+
+                    <Button
+                        android:id="@+id/chip_entire"
+                        style="@style/Widget.MaterialComponents.Button.TextButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:background="@drawable/bg_chip_unselected"
+                        android:text="Entire Stay"
+                        android:textColor="@color/colorPrimary"
+                        app:backgroundTint="@null" />
+
+                    <Button
+                        android:id="@+id/chip_private"
+                        style="@style/Widget.MaterialComponents.Button.TextButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:background="@drawable/bg_chip_unselected"
+                        android:text="Private Room"
+                        android:textColor="@color/colorPrimary"
+                        app:backgroundTint="@null" />
+
+                    <Button
+                        android:id="@+id/chip_shared"
+                        style="@style/Widget.MaterialComponents.Button.TextButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:background="@drawable/bg_chip_unselected"
+                        android:text="Shared"
+                        android:textColor="@color/colorPrimary"
+                        app:backgroundTint="@null" />
+                </LinearLayout>
+            </HorizontalScrollView>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Explore"
-                android:textSize="32sp"
-                android:letterSpacing="0.02"
-                android:textStyle="bold"
-                android:textColor="?android:textColorPrimary"
-                android:fontFamily="sans-serif-medium" />
+                android:layout_marginTop="24dp"
+                android:text="@string/featured_properties"
+                android:textColor="@color/colorTextDark"
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
-            <TextView
-                android:layout_width="wrap_content"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_properties"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Curated stays, refined search"
-                android:textSize="15sp"
-                android:textColor="?android:textColorSecondary"
-                android:layout_marginTop="4dp" />
+                android:layout_marginTop="16dp"
+                android:nestedScrollingEnabled="false" />
 
         </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
 
-        <!-- Dark Mode Toggle -->
-        <com.google.android.material.materialswitch.MaterialSwitch
-            android:id="@+id/switchDarkMode"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:thumbTint="@color/premiumAccentDeep"
-            app:trackTint="@color/premiumOutlineMuted"
-            app:trackTintMode="src_in" />
-
-    </LinearLayout>
-
-    <!-- Search Bar -->
-    <LinearLayout
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginTop="4dp"
-        android:layout_marginBottom="10dp"
-        android:background="@drawable/bg_search_premium"
-        android:elevation="4dp"
-        android:paddingStart="18dp"
-        android:paddingEnd="18dp"
-        android:layout_width="match_parent"
-        android:layout_height="56dp">
-
-        <ImageView
-            android:layout_width="22dp"
-            android:layout_height="22dp"
-            android:src="@drawable/ic_search"
-            android:layout_marginEnd="12dp"
-            android:tint="?android:textColorSecondary" />
-
-        <EditText
-            android:id="@+id/etSearch"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:hint="Where to?"
-            android:background="@null"
-            android:textSize="16sp"
-            android:textColorHint="@color/textLight"
-            android:textColor="?android:textColorPrimary"
-            android:singleLine="true"
-            android:inputType="text" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="10dp"
-        android:gravity="center_vertical"
-        android:paddingStart="12dp"
-        android:paddingEnd="12dp"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
-        android:background="@drawable/bg_filter_bar">
-
-        <EditText
-            android:id="@+id/etMaxPrice"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:hint="Max $/night"
-            android:inputType="numberDecimal"
-            android:textSize="14sp"
-            android:background="@null" />
-
-        <EditText
-            android:id="@+id/etMinRating"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:hint="Min rating"
-            android:inputType="numberDecimal"
-            android:textSize="14sp"
-            android:background="@null" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnApplyFilters"
-            style="@style/Widget.Material3.Button.TonalButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:text="Apply"
-            android:textAllCaps="false"
-            app:cornerRadius="12dp" />
-    </LinearLayout>
-
-    <!-- Category Chips (Horizontal Scroll) -->
-    <HorizontalScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:scrollbars="none"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp"
-        android:layout_marginTop="6dp"
-        android:layout_marginBottom="4dp"
-        android:clipToPadding="false">
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chipAll"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="All"
-                android:checked="true"
-                app:chipBackgroundColor="@color/chipBgLight"
-                android:textColor="@color/premiumAccentDeep"
-                app:chipCornerRadius="24dp"
-                app:chipStrokeWidth="1dp"
-                app:chipStrokeColor="@color/premiumOutlineMuted"
-                android:layout_marginEnd="8dp" />
-
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chipBeach"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="🏖️ Beach"
-                app:chipBackgroundColor="?attr/colorSurface"
-                android:textColor="@color/chipTextLight"
-                app:chipCornerRadius="24dp"
-                app:chipStrokeWidth="1dp"
-                app:chipStrokeColor="@color/premiumOutline"
-                android:layout_marginEnd="8dp" />
-
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chipMountain"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="🏔️ Mountain"
-                app:chipBackgroundColor="?attr/colorSurface"
-                android:textColor="@color/chipTextLight"
-                app:chipCornerRadius="24dp"
-                app:chipStrokeWidth="1dp"
-                app:chipStrokeColor="@color/premiumOutline"
-                android:layout_marginEnd="8dp" />
-
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chipCity"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="🏙️ City"
-                app:chipBackgroundColor="?attr/colorSurface"
-                android:textColor="@color/chipTextLight"
-                app:chipCornerRadius="24dp"
-                app:chipStrokeWidth="1dp"
-                app:chipStrokeColor="@color/premiumOutline"
-                android:layout_marginEnd="8dp" />
-
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chipVillage"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="🌿 Village"
-                app:chipBackgroundColor="?attr/colorSurface"
-                android:textColor="@color/chipTextLight"
-                app:chipCornerRadius="24dp"
-                app:chipStrokeWidth="1dp"
-                app:chipStrokeColor="@color/premiumOutline"
-                android:layout_marginEnd="8dp" />
-
-        </LinearLayout>
-
-    </HorizontalScrollView>
-
-    <TextView
+    <ProgressBar
+        android:id="@+id/progress_bar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Recommended for you"
-        android:textSize="19sp"
-        android:letterSpacing="0.01"
-        android:textStyle="bold"
-        android:textColor="?android:textColorPrimary"
-        android:fontFamily="sans-serif-medium"
-        android:paddingStart="20dp"
-        android:paddingEnd="20dp"
-        android:paddingTop="12dp" />
+        android:layout_gravity="center"
+        android:visibility="gone" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvRecommended"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:clipToPadding="false"
-        android:paddingStart="12dp"
-        android:paddingEnd="12dp"
-        android:paddingBottom="8dp" />
-
-    <!-- Section Header -->
-    <LinearLayout
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
-        android:paddingStart="20dp"
-        android:paddingEnd="20dp"
-        android:paddingTop="10dp"
-        android:paddingBottom="8dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:text="Popular listings"
-            android:textSize="19sp"
-            android:letterSpacing="0.01"
-            android:textStyle="bold"
-            android:textColor="?android:textColorPrimary"
-            android:fontFamily="sans-serif-medium" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="See all"
-            android:textSize="14sp"
-            android:textStyle="bold"
-            android:textColor="@color/premiumAccentDeep" />
-
-    </LinearLayout>
-
-    <!-- Listings RecyclerView -->
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvListings"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:clipToPadding="false"
-            android:paddingTop="4dp"
-            android:paddingBottom="8dp" />
-
-        <ProgressBar
-            android:id="@+id/progressBar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:visibility="gone" />
-
-    </FrameLayout>
-
-</LinearLayout>
+</FrameLayout>

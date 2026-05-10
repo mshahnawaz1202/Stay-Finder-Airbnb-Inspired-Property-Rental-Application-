@@ -1,16 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Stay Finder</string>
-    <string name="remove_from_favorites">Remove from favorites</string>
-    <string name="welcome_stayfinder">Welcome to StayFinder</string>
+    <string name="tagline">Find Your Perfect Stay</string>
+
+    <!-- Onboarding -->
+    <string name="skip">Skip</string>
+    <string name="next">Next \u2192</string>
+    <string name="get_started">Get Started</string>
+    <string name="onboarding_get_started">Get Started</string>
+    <string name="onboarding_next">Next \u2192</string>
+    <string name="onboarding_skip">Skip</string>
+    <string name="onboarding_title_1">Find Unique Stays</string>
+    <string name="onboarding_desc_1">Discover handpicked properties from cozy rooms to luxury villas.</string>
+    <string name="onboarding_title_2">Book Easily</string>
+    <string name="onboarding_desc_2">Reserve your stay in seconds with instant confirmation.</string>
+    <string name="onboarding_title_3">Host \u0026 Earn</string>
+    <string name="onboarding_desc_3">List your property and start earning from day one.</string>
+
+    <!-- Login/Signup -->
+    <string name="welcome_back">Welcome Back</string>
     <string name="sign_in_to_continue">Sign in to continue</string>
-    <string name="email">Email</string>
+    <string name="email">Email Address</string>
     <string name="password">Password</string>
-    <string name="password_min">Password (6+ characters)</string>
-    <string name="display_name">Display name</string>
-    <string name="login">Login</string>
-    <string name="register">Create account</string>
-    <string name="sign_in_with_google">Sign in with Google</string>
-    <string name="create_account">New here? Create an account</string>
-    <string name="create_account_btn">Register</string>
-    <string name="already_have_account">Already have an account? Sign in</string>
+    <string name="forgot_password">Forgot Password?</string>
+    <string name="login">LOGIN</string>
+    <string name="or_continue_with">--- or continue with ---</string>
+    <string name="dont_have_account">Don\'t have an account? Sign Up</string>
+    <string name="create_account">Create Account</string>
+    <string name="full_name">Full Name</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="i_am_a">I am a:</string>
+    <string name="guest">Guest</string>
+    <string name="host">Host</string>
+    <string name="terms_and_conditions">I agree to Terms \u0026 Conditions</string>
+    <string name="create_account_btn">CREATE ACCOUNT</string>
+    <string name="already_have_account">Already have an account? Login</string>
+
+    <!-- Validation Errors -->
+    <string name="error_name_empty">Please enter full name</string>
+    <string name="error_invalid_email">Please enter valid email</string>
+    <string name="error_invalid_password">Password must be 8+ chars and contain a number</string>
+    <string name="error_password_complexity">Password must be 8+ chars and contain a number</string>
+    <string name="error_password_match">Passwords do not match</string>
+    <string name="error_terms">Please accept Terms \u0026 Conditions</string>
+    <string name="error_email_exists">Email already registered. Please login.</string>
+    <string name="error_registration_failed">Registration failed. Please try again.</string>
+
+    <!-- Main Screens -->
+    <string name="explore">Explore</string>
+    <string name="wishlists">Wishlists</string>
+    <string name="trips">Trips</string>
+    <string name="profile">Profile</string>
+    <string name="where_to">Where to?</string>
+    <string name="featured_properties">Featured Properties</string>
+
+    <!-- Detail -->
+    <string name="about_this_place">About this place</string>
+    <string name="about_this_place_desc">Experience a wonderful stay at %1$s located in %2$s. This %3$s offers top-notch amenities and a comfortable environment.</string>
+    <string name="book_now">Book Now</string>
+    <string name="confirm_booking">CONFIRM BOOKING</string>
+    <string name="save_to_wishlist">Save to Wishlist</string>
+    <string name="remove_from_wishlist">Remove from Wishlist</string>
+    <string name="check_in">Check-in</string>
+    <string name="check_out">Check-out</string>
+
+    <!-- Profile -->
+    <string name="member_since">Member since %s</string>
+    <string name="about_me">About Me</string>
+    <string name="save_profile">SAVE PROFILE</string>
+    <string name="preferences">Preferences</string>
+    <string name="recent_searches">Recent Searches</string>
+    <string name="danger_zone">Danger Zone</string>
+    <string name="logout">Logout</string>
+    <string name="delete_account">Delete Account</string>
+    <string name="profile_updated">Profile updated successfully \u2713</string>
+
+    <!-- Formatting -->
+    <string name="price_pkr">PKR %s</string>
+    <string name="price_per_night">PKR %s / night</string>
+    <string name="date_range">%1$s - %2$s</string>
+    <string name="rating_format">%1$.1f (120 reviews)</string>
+    <string name="total_price_for_nights">Total: PKR %1$s for %2$d nights</string>
+
+    <!-- Alerts & Misc -->
+    <string name="account_created">Account created successfully! Please login.</string>
+    <string name="no_account_found">No account found with this email</string>
+    <string name="incorrect_password">Incorrect password</string>
+    <string name="booking_confirmed">Booking Confirmed! \u2713</string>
+    <string name="logout_confirm">Are you sure you want to logout?</string>
+    <string name="delete_confirm">Type your email to confirm</string>
+    <string name="wishlist_empty">Your wishlist is empty</string>
+    <string name="no_trips">No trips yet. Book your first stay!</string>
+    <string name="added_to_wishlist">Added to Wishlists</string>
+    <string name="removed_from_wishlist">Removed from Wishlists</string>
+    <string name="api_error">Could not load properties. Showing cached data.</string>
+
+    <!-- Added by zip1 upgrade -->
+    <string name="default_web_client_id">506892391297-6khqoh193tqdjhgibc29fsincjqti2sq.apps.googleusercontent.com</string>
 </resources>
