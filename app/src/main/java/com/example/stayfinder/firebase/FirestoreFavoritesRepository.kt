@@ -24,7 +24,7 @@ data class FavoriteRemoteChange(
 
 class FirestoreFavoritesRepository {
 
-    private val favorites = FirebaseFirestore.getInstance().collection(COL_FAVORITES)
+    private val favorites by lazy { FirebaseFirestore.getInstance().collection(COL_FAVORITES) }
     private var backgroundRegistration: ListenerRegistration? = null
 
     fun docId(userId: String, listingId: String) = "${userId}_$listingId"
