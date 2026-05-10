@@ -2,6 +2,7 @@ package com.example.stayfinder
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
@@ -25,19 +26,35 @@ class ProfileFragment : Fragment() {
         val tvEmail = view.findViewById<TextView>(R.id.tvProfileEmail)
         val btnLogout = view.findViewById<Button>(R.id.btnLogout)
 
-        // Receive data using Intent from host Activity
-        val intent = activity?.intent
-        var username = intent?.getStringExtra("USERNAME") ?: "Guest User"
-        var email = intent?.getStringExtra("EMAIL") ?: "guest@example.com"
+        val authManager = FirebaseAuthManager(requireContext())
+        val currentUser = authManager.getCurrentUser()
 
-        // For demo fallback if not properly assigned
-        if (username.isBlank()) username = "Muhammad Shah Nawaz"
-        if (email.isBlank()) email = "shahnawaz@gamil.com"
+        var username = "Guest User"
+        var email = "guest@example.com"
+
+        if (currentUser != null) {
+            username = currentUser.displayName ?: "User"
+            email = currentUser.email ?: "guest@example.com"
+        }
 
         tvName?.text = username
         tvEmail?.text = email
 
+        val btnToggleTheme = view.findViewById<Button>(R.id.btnToggleTheme)
+        btnToggleTheme?.setOnClickListener {
+            val sharedPrefs = requireActivity().getSharedPreferences("theme_prefs", Context.MODE_PRIVATE)
+            val isDark = sharedPrefs.getBoolean("is_dark", false)
+            if (isDark) {
+                androidx.appcompat.app.AppCompatDelegate.setDefaultNightMode(androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_NO)
+                sharedPrefs.edit().putBoolean("is_dark", false).apply()
+            } else {
+                androidx.appcompat.app.AppCompatDelegate.setDefaultNightMode(androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES)
+                sharedPrefs.edit().putBoolean("is_dark", true).apply()
+            }
+        }
+
         btnLogout?.setOnClickListener {
+            authManager.logout()
             val loginIntent = Intent(activity, LoginActivity::class.java)
             loginIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(loginIntent)
