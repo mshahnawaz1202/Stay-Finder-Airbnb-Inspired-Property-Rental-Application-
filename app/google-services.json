@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "506892391297",
+    "firebase_url": "https://stayfinder-9092d-default-rtdb.firebaseio.com",
+    "project_id": "stayfinder-9092d",
+    "storage_bucket": "stayfinder-9092d.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:506892391297:android:1a97e2c97967393d868e80",
+        "android_client_info": {
+          "package_name": "com.stayfinder.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "506892391297-6khqoh193tqdjhgibc29fsincjqti2sq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDs2YQ2yxdsTMItbwH97AmELBmtJroo1a4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "506892391297-6khqoh193tqdjhgibc29fsincjqti2sq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
