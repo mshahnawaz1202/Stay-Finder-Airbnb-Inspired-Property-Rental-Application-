@@ -41,17 +41,26 @@
                 android:background="@drawable/rounded_chip_bg"
                 android:contentDescription="Back" />
 
-            <!-- Favorite button -->
+            <!-- Share button -->
             <ImageView
-                android:id="@+id/imgFavoriteBtn"
+                android:id="@+id/imgShareBtn"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_gravity="top|end"
-                android:layout_margin="16dp"
+                android:layout_marginEnd="64dp"
+                android:layout_marginTop="16dp"
                 android:padding="8dp"
-                android:src="@drawable/ic_favorite_border"
+                android:src="@drawable/ic_search"
                 android:background="@drawable/rounded_chip_bg"
-                android:contentDescription="Favorite" />
+                android:contentDescription="Share" />
+
+            <!-- Compose Favorite button -->
+            <androidx.compose.ui.platform.ComposeView
+                android:id="@+id/composeFavoriteBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top|end"
+                android:layout_margin="16dp" />
 
             <!-- Title over image -->
             <LinearLayout
