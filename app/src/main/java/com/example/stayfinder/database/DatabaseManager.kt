@@ -127,7 +127,7 @@ class DatabaseManager(context: Context) {
 
     private fun cursorToBooking(cursor: Cursor): Booking {
         return Booking(
-            id = cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseHelper.COL_BOOK_ID)),
+            id = cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseHelper.COL_BOOK_ID)).toString(),
             propertyId = cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseHelper.COL_BOOK_PROPERTY_ID)),
             propertyName = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COL_BOOK_PROPERTY_NAME)),
             checkInDate = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COL_BOOK_CHECK_IN)),
