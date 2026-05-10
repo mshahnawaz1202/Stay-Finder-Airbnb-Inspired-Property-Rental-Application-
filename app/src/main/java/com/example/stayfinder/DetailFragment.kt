@@ -20,7 +20,7 @@ import kotlinx.coroutines.launch
 class DetailFragment : Fragment() {
 
     private lateinit var dbManager: DatabaseManager
-    private val favRepo = FirestoreFavoritesRepository()
+    private val favRepo by lazy { FirestoreFavoritesRepository() }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

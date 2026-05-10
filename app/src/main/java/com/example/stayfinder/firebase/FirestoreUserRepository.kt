@@ -6,7 +6,7 @@ import kotlinx.coroutines.tasks.await
 
 class FirestoreUserRepository {
 
-    private val users = FirebaseFirestore.getInstance().collection(COL_USERS)
+    private val users by lazy { FirebaseFirestore.getInstance().collection(COL_USERS) }
 
     suspend fun ensureUserProfile(uid: String, email: String?, displayName: String?) {
         val doc = users.document(uid).get().await()

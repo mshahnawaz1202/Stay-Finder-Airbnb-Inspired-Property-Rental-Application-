@@ -17,8 +17,8 @@ data class ListingChange(
 
 class FirestoreListingRepository {
 
-    private val db = FirebaseFirestore.getInstance()
-    private val listings = db.collection(COL_LISTINGS)
+    private val db by lazy { FirebaseFirestore.getInstance() }
+    private val listings by lazy { db.collection(COL_LISTINGS) }
     private var backgroundRegistration: ListenerRegistration? = null
 
     fun listenAll(onUpdate: (List<Property>) -> Unit): ListenerRegistration {
