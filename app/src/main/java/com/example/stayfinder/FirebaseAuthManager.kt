@@ -12,7 +12,7 @@ class FirebaseAuthManager(private val context: Context) {
 
     val auth: FirebaseAuth = FirebaseAuth.getInstance()
     private val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-        .requestIdToken("YOUR_WEB_CLIENT_ID") // You will need to replace this
+        .requestIdToken("123456789012-dummy.apps.googleusercontent.com") // You will need to replace this with your actual Web Client ID
         .requestEmail()
         .build()
 
