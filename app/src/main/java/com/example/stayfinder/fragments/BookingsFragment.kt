@@ -21,9 +21,11 @@ import com.google.android.material.textfield.TextInputEditText
 
 class BookingsFragment : Fragment() {
 
-    private lateinit var dbManager: DatabaseManager
+    private lateinit var firestoreManager: com.example.stayfinder.FirestoreManager
+    private lateinit var authManager: com.example.stayfinder.FirebaseAuthManager
     private lateinit var adapter: BookingAdapter
     private var isAscending = true
+    private var allBookings: List<Booking> = emptyList()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,22 +33,28 @@ class BookingsFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_bookings, container, false)
 
-        dbManager = DatabaseManager(requireContext())
+        firestoreManager = com.example.stayfinder.FirestoreManager()
+        authManager = com.example.stayfinder.FirebaseAuthManager(requireContext())
         
         val rvBookings: RecyclerView = view.findViewById(R.id.rvBookings)
         val etSearch: EditText = view.findViewById(R.id.etSearchBookings)
         val btnSort: ImageButton = view.findViewById(R.id.btnSortBookings)
 
         rvBookings.layoutManager = LinearLayoutManager(context)
+        adapter = BookingAdapter(emptyList(), 
+            onEditClick = { booking -> showEditDialog(booking) },
+            onDeleteClick = { booking -> showDeleteConfirm(booking) }
+        )
+        rvBookings.adapter = adapter
         
-        loadBookings(rvBookings)
+        setupRealtimeListener()
 
         // Search logic
         etSearch.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                val query = s.toString()
-                val results = dbManager.searchBookings(query)
+                val query = s.toString().lowercase()
+                val results = allBookings.filter { it.propertyName.lowercase().contains(query) || it.guestName.lowercase().contains(query) }
                 adapter.updateList(results)
             }
             override fun afterTextChanged(s: Editable?) {}
@@ -55,7 +63,11 @@ class BookingsFragment : Fragment() {
         // Sort logic
         btnSort.setOnClickListener {
             isAscending = !isAscending
-            val sortedList = dbManager.sortBookingsByDate(isAscending)
+            val sortedList = if (isAscending) {
+                allBookings.sortedBy { it.checkInDate }
+            } else {
+                allBookings.sortedByDescending { it.checkInDate }
+            }
             adapter.updateList(sortedList)
             val order = if (isAscending) "Ascending" else "Descending"
             Toast.makeText(context, "Sorted by Date: $order", Toast.LENGTH_SHORT).show()
@@ -64,13 +76,25 @@ class BookingsFragment : Fragment() {
         return view
     }
 
-    private fun loadBookings(rvBookings: RecyclerView) {
-        val bookings = dbManager.getAllBookings()
-        adapter = BookingAdapter(bookings, 
-            onEditClick = { booking -> showEditDialog(booking) },
-            onDeleteClick = { booking -> showDeleteConfirm(booking) }
-        )
-        rvBookings.adapter = adapter
+    private fun setupRealtimeListener() {
+        val user = authManager.getCurrentUser()
+        if (user == null) {
+            Toast.makeText(context, "Please login to view bookings", Toast.LENGTH_SHORT).show()
+            return
+        }
+        
+        firestoreManager.getBookingsRef(user.uid).addSnapshotListener { snapshot, e ->
+            if (e != null) {
+                Toast.makeText(context, "Error loading bookings", Toast.LENGTH_SHORT).show()
+                return@addSnapshotListener
+            }
+            
+            if (snapshot != null) {
+                val bookings = snapshot.toObjects(Booking::class.java)
+                allBookings = bookings
+                adapter.updateList(bookings)
+            }
+        }
     }
 
     private fun showEditDialog(booking: Booking) {
@@ -92,9 +116,16 @@ class BookingsFragment : Fragment() {
                     checkInDate = etCheckIn.text.toString(),
                     checkOutDate = etCheckOut.text.toString()
                 )
-                dbManager.updateBooking(updatedBooking)
-                refreshList()
-                Toast.makeText(context, "Booking updated", Toast.LENGTH_SHORT).show()
+                val user = authManager.getCurrentUser()
+                if (user != null) {
+                    firestoreManager.updateBooking(user.uid, updatedBooking) { success ->
+                        if (success) {
+                            Toast.makeText(context, "Booking updated", Toast.LENGTH_SHORT).show()
+                        } else {
+                            Toast.makeText(context, "Failed to update", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                }
             }
             .setNegativeButton("Cancel", null)
             .show()
@@ -105,15 +136,18 @@ class BookingsFragment : Fragment() {
             .setTitle("Delete Booking")
             .setMessage("Are you sure you want to delete this booking for ${booking.propertyName}?")
             .setPositiveButton("Delete") { _, _ ->
-                dbManager.deleteBooking(booking.id)
-                refreshList()
-                Toast.makeText(context, "Booking deleted", Toast.LENGTH_SHORT).show()
+                val user = authManager.getCurrentUser()
+                if (user != null) {
+                    firestoreManager.deleteBooking(user.uid, booking.id) { success ->
+                        if (success) {
+                            Toast.makeText(context, "Booking deleted", Toast.LENGTH_SHORT).show()
+                        } else {
+                            Toast.makeText(context, "Failed to delete", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                }
             }
             .setNegativeButton("Cancel", null)
             .show()
-    }
-
-    private fun refreshList() {
-        adapter.updateList(dbManager.getAllBookings())
     }
 }
